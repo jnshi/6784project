@@ -1,0 +1,226 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% ICML 2010 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use the following line _only_ if you're still using LaTeX 2.09.
+%\documentstyle[icml2010,epsf,natbib]{article}
+% If you rely on Latex2e packages, like most moden people use this:
+\documentclass{article}
+
+% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure} 
+
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% As of 2010, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2010} with
+% \usepackage[nohyperref]{icml2010} above.
+\usepackage{hyperref}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+% \usepackage{icml2010} 
+% Employ this version of the ``usepackage'' statement after the paper has
+% been accepted, when creating the final version.  This will set the
+% note in the first column to ``Appearing in''
+\usepackage[accepted]{icml2010}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{CS 6784: Project proposal}
+
+
+
+\begin{document} 
+
+\twocolumn[
+\icmltitle{CS 6784 (Spring 2014): Project proposal}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2010
+% package.
+\icmlauthor{Charles Hermann}{cih5}
+%\icmladdress{Your Fantastic Institute,
+%            314159 Pi St., Palo Alto, CA 94306 USA}
+\icmlauthor{Jonathan Shi}{js2845}
+%\icmladdress{Their Fantastic Institute,
+%            27182 Exp St., Toronto, ON M6H 2T1 CANADA}
+
+% You may provide any keywords that you 
+% find helpful for describing your paper; these are used to populate 
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{project proposal, MIR, transcription, machine learning}
+
+\vskip 0.3in
+]
+
+%\begin{abstract} 
+%ICML 2010 full paper submissions are due February 1, 2010. Reviewing will
+%be blind to the identities of the authors, and therefore identifying
+%information should not appear in any way in papers submitted for
+%review. Submissions must be in PDF, 8 page length limit.
+%\end{abstract} 
+
+
+\section{Team}
+Charles Hermann (cih5) and Jonathan Shi (js2845)
+
+
+\section{Motivation}
+One of the major areas of research in MIR is music transcription, the
+process of creating a musical score from an audio recording. Though this
+can be done manually by experienced musicians, this process is difficult
+and time consuming. As a result, the ability to automatically transcribe
+music has numerous positive ramifications in the musical community and the
+MIR community. In addition, transcription presents an interesting and
+difficult challenge even for seemingly easily versions of the task such as
+transcribing piano solos. Several factors make this a difficult area of
+study including but not limited to: the high-dimensionality of the
+datasets, the large margin for error (both false positives and false
+negatives), and the lack of a field-accepted feature vector/technique for
+extracting the data. 
+
+Currently, the primary techniques used in transcription are HMMs applied to
+temporal windows and frequency bins \cite{raphael2002automatic}, neural
+networks \cite{bock2012polyphonic}, and simple
+discriminative techniques to identify if a singular note is being played in
+a temporal window \cite{poliner2006discriminative}. Also feature sets have
+been obtained via deep learning \cite{nam2011classification} and sparse
+nonnegative matrix factorization \cite{costantini2013nmf}, which have performed
+better in classification-based transcription than manually specified features.
+Finally, techniques have been tuned to detect note onsets and note offsets for
+the piano \cite{5946322}.
+
+
+\section{Statement of Task}
+\begin{enumerate}
+\item
+Can we improve upon the state-of-the-art in transcription? Specifically,
+how well will techniques such as max-margin markov models (involving a
+multi-class SVM for note identification and a HMM on top of identified notes)
+work within this area?
+\item
+Can we approach transcription as a streaming problem?
+\item
+Can we create an interesting or novel transcription technique which
+involves human suggestions? For example, can we use a resource like
+\url{http://www.ultimate-guitar.com} to aid in transcription of more
+complicated songs? For another example, can we increase the accuracy of
+transcription using human input?
+\end{enumerate}
+
+
+\section{General Approach}
+\begin{enumerate}
+\item
+One approach we intend to try to use to improve upon existing automated
+transcription techniques is by using a
+maximum-margin Markov model \cite{Taskar03max-marginmarkov} which improves
+upon an HMM by using SVM techniques to find optimal separating hyperplanes
+that respect correlations between components of output labels.
+In addition, we expect the maximum-margin Markov framework introduced in
+\cite{anguelov2005discriminative} to be of use.
+\item
+Two factors in current work prevent the techniques from applying to
+transcription as a streaming problem: first, assumptions made in the
+algorithms which try to use future notes to better estimate current notes,
+and second, the large amount of computation needed for
+current techniques and problems with processing power. It seems like if we
+could remove the assumption that future sound data is available, and make
+simplifications to the model with only a marginal loss in accuracy, this
+could be an interesting and useful advancement/technique.
+\item
+Numerous resources exist online where people have partially or noisily
+transcribed large amounts of data. For example,
+\url{http://www.ultimate-guitar.com}
+contains a large database of user generated guitar tablatures (``tabs'') for
+popular songs. Unfortunately, these tabs often contain mistakes, scale
+transformations, or simplifications of the actual song in
+question. However, it is possible these tabs could be used as a starting
+point to inform a more accurate transcription.
+
+We also wonder if human input could usefully solve
+some of the more difficult problems in music transcription.
+For example, one of the main steps in transcription is determining
+note onset (when a note is first played). While this is easy for humans,
+this has proven difficult for machines due to secondary harmonics mimicking
+the onset of false notes. Perhaps a Bayesian approach which asked humans to
+help when confronted with low certainty could be useful. This way, with the
+aid of computers, even non-experts could quickly generate transcriptions for
+more complicated music. We would be lowering the experience level needed to
+generate the transcriptions, and make this a more accessible task for amateur
+musicians who might want to, for instance, create a score to play their
+instrument off of.
+\end{enumerate}
+
+
+\section{Resources}
+There are several datasets that should be applicable to our task on
+\url{http://deeplearning.net/datasets/}. In particular, MIDI sequences and
+associated synthesized audio files can be found on the web pages
+\url{http://www.piano-midi.de/} and \url{http://musedata.stanford.edu/}.
+Researcher-generated datasets used in \cite{poliner2006discriminative} and
+\cite{emiya2010multipitch} are available and used in other papers in the area.
+
+User-created tabs of songs can be found on \url{http://www.ultimate-guitar.com}
+and 30-second samples of these can be found on \url{http://us.7digital.com/}.
+
+We also expect all of our cited works to contribute valuable insight and
+techniques, whether in classification methods or in feature extraction.
+
+
+\section{Schedule}
+Our milestones for this project are:
+\begin{description}
+\item[16 Feb.] Project proposal submitted.
+\item[ 1 Mar.] Literature reviewed, datasets acquired.
+\item[15 Mar.] Features acquired, and max-margin Markov model implemented.
+\item[16 Mar.] First status report submitted.
+\item[ 1 Apr.] Several relaxations attempted for streaming transcription
+  possible.
+\item[15 Apr.] Model modified to allow for human input and additional
+  ``hints'', and to detect when human input may be necessary.
+\item[20 Apr.] Second status report submitted.
+\item[25 Apr.] Basic UI implemented for easy use of human-assisted machine
+  transcription.
+\item[30 Apr.] Class presentation.
+\item[12 May.] Final project report submitted.
+\end{description}
+
+
+% In the unusual situation where you want a paper to appear in the
+% references without citing it in the main text, use \nocite
+%\nocite{langley00}
+
+\bibliography{statusreport1}
+\bibliographystyle{icml2010}
+
+\end{document} 
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This 2010 version was
+% created by Thorsten Joachims & Johannes Fuernkranz, 
+% slightly modified from the 2009 version by Kiri Wagstaff and 
+% Sam Roweis's 2008 version, which is slightly modified from 
+% Prasad Tadepalli's 2007 version which is a lightly 
+% changed version of the previous year's version by Andrew Moore, 
+% which was in turn edited from those of Kristian Kersting and 
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.  
+
+
