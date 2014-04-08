@@ -1,0 +1,87 @@
+\begin{thebibliography}{12}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Anguelov et~al.(2005)Anguelov, Taskarf, Chatalbashev, Koller, Gupta,
+  Heitz, and Ng]{anguelov2005discriminative}
+Anguelov, Dragomir, Taskarf, B, Chatalbashev, Vassil, Koller, Daphne, Gupta,
+  Dinkar, Heitz, Geremy, and Ng, Andrew.
+\newblock Discriminative learning of markov random fields for segmentation of
+  3d scan data.
+\newblock In \emph{Computer Vision and Pattern Recognition, 2005. CVPR 2005.
+  IEEE Computer Society Conference on}, volume~2, pp.\  169--176. IEEE, 2005.
+
+\bibitem[Benetos \& Dixon(2011)Benetos and Dixon]{5946322}
+Benetos, E. and Dixon, S.
+\newblock Polyphonic music transcription using note onset and offset detection.
+\newblock In \emph{Acoustics, Speech and Signal Processing (ICASSP), 2011 IEEE
+  International Conference on}, pp.\  37--40, May 2011.
+\newblock \doi{10.1109/ICASSP.2011.5946322}.
+
+\bibitem[Bock \& Schedl(2012)Bock and Schedl]{bock2012polyphonic}
+Bock, S and Schedl, Markus.
+\newblock Polyphonic piano note transcription with recurrent neural networks.
+\newblock In \emph{Acoustics, Speech and Signal Processing (ICASSP), 2012 IEEE
+  International Conference on}, pp.\  121--124. IEEE, 2012.
+
+\bibitem[COSTANTINI et~al.(2013)COSTANTINI, TODISCO, and
+  PERFETTI]{costantini2013nmf}
+COSTANTINI, GIOVANNI, TODISCO, MASSIMILIANO, and PERFETTI, RENZO.
+\newblock Nmf based dictionary learning for automatic transcription of
+  polyphonic piano music.
+\newblock \emph{WSEAS Transactions on Signal Processing}, 9\penalty0 (3), 2013.
+
+\bibitem[Emiya et~al.(2010)Emiya, Badeau, and David]{emiya2010multipitch}
+Emiya, Valentin, Badeau, Roland, and David, Bertrand.
+\newblock Multipitch estimation of piano sounds using a new probabilistic
+  spectral smoothness principle.
+\newblock \emph{Audio, Speech, and Language Processing, IEEE Transactions on},
+  18\penalty0 (6):\penalty0 1643--1654, 2010.
+
+\bibitem[Gang et~al.(2009)Gang, Bocko, Headlam, and
+  Lundberg]{gang2009polyphonic}
+Gang, Ren, Bocko, Mark~F, Headlam, Dave, and Lundberg, Justin.
+\newblock Polyphonic music transcription employing max-margin classification of
+  spectrograhic features.
+\newblock In \emph{Applications of Signal Processing to Audio and Acoustics,
+  2009. WASPAA'09. IEEE Workshop on}, pp.\  57--60. IEEE, 2009.
+
+\bibitem[Marolt(2004)]{marolt2004connectionist}
+Marolt, Matija.
+\newblock A connectionist approach to automatic transcription of polyphonic
+  piano music.
+\newblock \emph{Multimedia, IEEE Transactions on}, 6\penalty0 (3):\penalty0
+  439--449, 2004.
+
+\bibitem[Nam et~al.(2011)Nam, Ngiam, Lee, and Slaney]{nam2011classification}
+Nam, Juhan, Ngiam, Jiquan, Lee, Honglak, and Slaney, Malcolm.
+\newblock A classification-based polyphonic piano transcription approach using
+  learned feature representations.
+\newblock In \emph{ISMIR}, pp.\  175--180, 2011.
+
+\bibitem[Poliner \& Ellis(2006)Poliner and Ellis]{poliner2006discriminative}
+Poliner, Graham~E and Ellis, Daniel~PW.
+\newblock A discriminative model for polyphonic piano transcription.
+\newblock \emph{EURASIP Journal on Advances in Signal Processing}, 2007, 2006.
+
+\bibitem[Raphael(2002)]{raphael2002automatic}
+Raphael, Christopher.
+\newblock Automatic transcription of piano music.
+\newblock In \emph{ISMIR}, 2002.
+
+\bibitem[Ryynanen \& Klapuri(2005)Ryynanen and Klapuri]{ryynanen2005polyphonic}
+Ryynanen, Matti~P and Klapuri, Anssi.
+\newblock Polyphonic music transcription using note event modeling.
+\newblock In \emph{Applications of Signal Processing to Audio and Acoustics,
+  2005. IEEE Workshop on}, pp.\  319--322. IEEE, 2005.
+
+\bibitem[Taskar et~al.(2003)Taskar, Guestrin, and
+  Koller]{Taskar03max-marginmarkov}
+Taskar, Ben, Guestrin, Carlos, and Koller, Daphne.
+\newblock Max-margin markov networks.
+\newblock In \emph{.} MIT Press, 2003.
+
+\end{thebibliography}

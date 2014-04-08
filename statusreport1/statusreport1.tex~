@@ -122,6 +122,12 @@ that respect correlations between components of output labels.
 In addition, we expect the maximum-margin Markov framework introduced in
 \cite{anguelov2005discriminative} to be of use.
 
+We also intend upon testing a PGM style approach, which mimics the F0 style of
+signal subtraction but does so in a generative manner. We believe this will give
+several benefits: it will allow us to ground the very heuristic/hack style of an effective technique,
+it will allow us more flexibility in dealing with these algorithms, and it will apply knowledge from another
+field of study.
+
 In addition we also want to test other techniques such as tiling the frequency windows, different feature vectors,
 and adding the derivatives of the frequency windows into the features. Tiling the frequency windows has been done
 by the discriminative approaches but would be an interesting addition to the PGM style. In addition, there should
@@ -135,12 +141,6 @@ We will evaluate these methods according to the standard set in \cite{poliner200
 In both of these papers, they worked with a large library of mp3 files accompanied by midi files. Their software produced
 output which could be directly compared with the midi files and measured for: notes correctly predicted, notes failed to be predicted,
 and notes incorrectly predicted.
-
-Possible extension given time: we would like to test a PGM style approach, which mimics the F0 style of
-signal subtraction but does so in a generative manner. We believe this will give
-several benefits: it will allow us to ground the very heuristic/hack style of an effective technique,
-it will allow us more flexibility in dealing with these algorithms, and it will apply knowledge from another
-field of study.
 
 \section{Resources}
 There are several datasets that should be applicable to our task on
