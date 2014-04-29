@@ -8,7 +8,6 @@
 \usepackage[mathscr]{eucal}
 \usepackage{epsfig}
 
-
 \mode<presentation>
 {
 \usetheme{Ilmenau}
@@ -26,16 +25,6 @@
 \titlepage
 Using structured learning to transcribe piano music
 \end{frame}
-
-% Probably unnecessary slide?
-\AtBeginSection[]
-{
-\begin{frame}
-\frametitle{Outline}
-\tableofcontents[currentsection]
-\end{frame}
-}
-
 
 \section{Motivation}
 % 1 minute; total: 1
@@ -82,37 +71,36 @@ Some separate the classification of notes into two steps: note onset detection a
 
 % 1 minute; total: 5
 \begin{frame}{Previous Solutions}
-\begin{description}
-\item[Discriminative] \mbox{} \\
-  Uses SVM one-versus-all classifiers.
-\item[Generative/Recursive Neural Nets] \mbox{} \\
-  \begin{itemize}
-  \item 
-    Uses neural nets to generate features,
-  \item
-    or models ``listening'' using stateful oscillators.
-  \end{itemize}
-\item[F0 approach] \mbox{} \\
-  \begin{itemize}
-  \item
-    Repeatedly detects and subtracts the most predominant note,
-  \item
-    or uses E-M with frequency profiles for each possible note.
-  \end{itemize}
+\begin{description} 
+\item[Discriminative] \hfill \\ 
+    \begin{itemize}\setlength{\itemindent}{-5em}
+    \item  Uses SVM one-versus-all classifiers.
+    \end{itemize}
+\item[Generative/Recursive Neural Nets] \hfill \\
+    \begin{itemize}\setlength{\itemindent}{-5em}
+    \item Uses neural nets to generate features,
+    \item or models ``listening'' using stateful oscillators.
+    \end{itemize}
+\item[F0 approach] \hfill \\
+    \begin{itemize}\setlength{\itemindent}{-5em}
+    \item Repeatedly detects and subtracts the predominant note,
+    \item or uses E-M with frequency profiles for each possible note.
+    \end{itemize}
 \end{description}
 \end{frame}
 
 % 1 minute; total: 6
 \section{Algorithm}
 \begin{frame}{Idea}
-So far the discriminative approaches have performed the best.
+So far the discriminative approaches have performed the best.\\
+\vspace{.5cm}
 
 \pause
 A couple of thoughts:
 \begin{itemize}
 \item One-versus-All SVM is terrible!
-\item Why emphasis on the HMM at end? % make sure to explain which HMM?
 \item Can improve the feature vectors chosen and the way windowing is done.
+\item Why emphasis on the HMM at end? % make sure to explain which HMM?
 \end{itemize}
 \end{frame}
 

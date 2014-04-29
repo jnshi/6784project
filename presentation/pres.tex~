@@ -8,7 +8,6 @@
 \usepackage[mathscr]{eucal}
 \usepackage{epsfig}
 
-
 \mode<presentation>
 {
 \usetheme{Ilmenau}
@@ -27,40 +26,42 @@
 Using structured learning to transcribe piano music
 \end{frame}
 
-\AtBeginSection[]
-{
-\begin{frame}
-\frametitle{Outline}
-\tableofcontents[currentsection]
-\end{frame}
-}
-
-
 \section{Motivation}
+% 1 minute; total: 1
 \begin{frame}{Example}
-Please listen to the following selections.
+%Please listen to the following selections.
 \end{frame}
+
+% 1 minute; total: 2
 
 \begin{frame}{The Problem}
 
-{\bf Goal:} Given a recording of a song, transcribe the song in an accurate manner.\\
-\vspace{.5cm}
-{\bf Input:} Recording of song taken in variable settings and with variable quality of recording equipment.\\
-{\bf Output:} MIDI file of the song.
+\only<1-1>{
+  {\bf Goal:} Given a recording of a song, transcribe the song in an accurate manner.\\
+  \vspace{.5cm}
+  {\bf Input:} Recording of song taken in variable settings and with variable quality of recording equipment.\\
+  \vspace{.1cm}
+  {\bf Output:} MIDI file of the song.
+}
+\only<2-2>{
+  % Be sure to mention overtones and point out disappearing partials.
+  \includegraphics[width=\textwidth]{spectogram.png}
+}
 \end{frame}
 
+% 1 minute; total: 3
 \section{Previous Solutions}
 \begin{frame}{Previous Solutions}
 
-The general appraoch
+General approach:
 
 \includegraphics[scale=.4]{algorithm_template.png}
 
-Some separate the classification of notes into two steps: note onset detection and then classification of notes. These tend to suffer, why?
+Some separate the classification of notes into two steps: note onset detection and then classification of tones. These tend to suffer, why?
 \end{frame}
 
+% 1 minute; total: 4
 \begin{frame}{Previous Solutions}
-Lots of variations and possibilities to consider
 \begin{itemize}
 \item How to select the windows? Overlapping? Multiple windows with different lengths?
 \item What classification technique to use? How to extract feature vector from windows?
@@ -68,37 +69,73 @@ Lots of variations and possibilities to consider
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Previos Solutions}
-Three general styles of classification
-\begin{itemize}
-\item Discriminative - uses SVM one versus all classifiers
-\item Generative/Recursive Neural Nets - TODO
-\item F0 approach - TODO
-\end{itemize}
+% 1 minute; total: 5
+\begin{frame}{Previous Solutions}
+\begin{description} 
+\item[Discriminative] \hfill \\ 
+    \begin{itemize}\setlength{\itemindent}{-5em}
+    \item  Uses SVM one-versus-all classifiers.
+    \end{itemize}
+\item[Generative/Recursive Neural Nets] \hfill \\
+    \begin{itemize}\setlength{\itemindent}{-5em}
+    \item Uses neural nets to generate features,
+    \item or models ``listening'' using stateful oscillators.
+    \end{itemize}
+\item[F0 approach] \hfill \\
+    \begin{itemize}\setlength{\itemindent}{-5em}
+    \item Repeatedly detects and subtracts the predominant note,
+    \item or uses E-M with frequency profiles for each possible note.
+    \end{itemize}
+\end{description}
 \end{frame}
 
+% 1 minute; total: 6
 \section{Algorithm}
 \begin{frame}{Idea}
-So far the descriminative approaches have performed the best.
+So far the discriminative approaches have performed the best.\\
+  \vspace{.5cm}
+
 \pause
 A couple of thoughts:
 \begin{itemize}
 \item One-versus-All SVM is terrible!
-\item Why place too much emphasis upon the HMM at end?
 \item Can improve the feature vectors chosen and the way windowing is done.
+\item Why emphasis on the HMM at end? % make sure to explain which HMM?
 \end{itemize}
 \end{frame}
 
-
+% 1 minute; total: 7
 \begin{frame}{New System}
-\end{frame}
-\begin{frame}{Benefits}
+Structural SVM
+
+\vspace{1em}
+Markov model of correlations:
+\begin{itemize}
+\item between notes played at the same time.
+\item between notes played in the present vs. past/future.
+\end{itemize}
+
+\vspace{1em}
+Features: spectograms.
 \end{frame}
 
+% 1 minute; total: 8
+\begin{frame}{Benefits}
+Smoothing included in classification.
+
+\vspace{1em}
+Classification of onsets/offsets.
+
+\vspace{1em}
+Using differences across adjacent time steps in onset/offset classification.
+\end{frame}
+
+% 1 minute; total: 9
 \section{Preliminary Results}
 \begin{frame}
 \end{frame}
 
+% 0.5 minute; total: 9.5
 \section{Summary}
 \begin{frame}
 \end{frame}
