@@ -1,7 +1,0 @@
-\beamer@endinputifotherversion {3.10pt}
-\beamer@sectionintoc {1}{Motivation}{2}{0}{1}
-\beamer@sectionintoc {2}{Previous Solutions}{5}{0}{2}
-\beamer@sectionintoc {3}{Algorithm}{9}{0}{3}
-\beamer@sectionintoc {4}{Preliminary Results}{14}{0}{4}
-\beamer@sectionintoc {5}{Summary}{16}{0}{5}
-\beamer@sectionintoc {6}{References}{18}{0}{6}
