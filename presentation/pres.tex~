@@ -62,6 +62,8 @@ Some separate the classification of notes into two steps: note onset detection a
 
 % 1 minute; total: 4
 \begin{frame}{Previous Solutions}
+\includegraphics[scale=.4]{algorithm_template.png}
+
 \begin{itemize}
 \item How to select the windows? Overlapping? Multiple windows with different lengths?
 \item What classification technique to use? How to extract feature vector from windows?
@@ -93,7 +95,7 @@ Some separate the classification of notes into two steps: note onset detection a
 \section{Algorithm}
 \begin{frame}{Idea}
 So far the discriminative approaches have performed the best.\\
-  \vspace{.5cm}
+\vspace{.5cm}
 
 \pause
 A couple of thoughts:
@@ -106,7 +108,7 @@ A couple of thoughts:
 
 % 1 minute; total: 7
 \begin{frame}{New System}
-Structural SVM
+Structural SVM. Find the $arg\,max_{x} f(x,y)$.
 
 \vspace{1em}
 Markov model of correlations:
@@ -132,18 +134,23 @@ Using differences across adjacent time steps in onset/offset classification.
 
 % 1 minute; total: 9
 \section{Preliminary Results}
-\begin{frame}
+\begin{frame}{Preliminary Results}
+On simple chords
+\begin{itemize}
+\item Multiclass performs better than OvA classifier
+\item Structured performs better than multiclass
+\end{itemize}
+
+On start of music with super limited HMM smoothing
+\begin{itemize}
+\item Multiclass performs better than OvA classifier
+\item Structured performs very slightly better than multiclass. Still in progress!
+\end{itemize}
 \end{frame}
 
 % 0.5 minute; total: 9.5
 \section{Summary}
 \begin{frame}
-\end{frame}
-
-\section{References}
-\begin{frame}{Bibliography}
-\bibliographystyle{amsalpha}
-\nocite{*}
-\bibliography{pres}
+Seems like we can improve on state of the art techniques in polyphonic transcription using existing structured learning techniques. 
 \end{frame}
 \end{document}
