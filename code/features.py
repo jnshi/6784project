@@ -4,12 +4,13 @@ import audioprocessor as ap
 import dirs
 import util as ut
 
-def get_wav_file_as_feature(filename, framesamp, hopsamp):
+def get_wav_file_as_feature(filename, framesamp, hopsamp, downsample=False):
     data, samplerate = ap.get_wav_data(filename)
-    return get_wav_data_as_feature(data, framesamp, hopsamp)
+    return get_wav_data_as_feature(data, framesamp, hopsamp, downsample)
 
-def get_wav_data_as_feature(data, framesamp, hopsamp):
+def get_wav_data_as_feature(data, framesamp, hopsamp, downsample=False):
     left = ap.get_left(data)
+    if downsample: left = ap.downsample(left, 5)
     return ut.stft(left, framesamp, hopsamp)
 
 def get_txt_as_label(filename, samplerate, framesamp, hopsamp, nwindows):

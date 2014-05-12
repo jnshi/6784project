@@ -1,6 +1,7 @@
 from scikits.audiolab import *
 import midi
 import numpy as np
+import scipy.signal
 
 import dirs
 
@@ -32,6 +33,9 @@ def get_left(data):
 def get_right(data):
     return data[:,1]
 
+# works on single channel data only
+def downsample(data, ntimes):
+    return signal.decimate(data, ntimes)
 
 def get_txt_data(filename, samplerate, numsamples):
     assert dirs.get_ext(filename) == '.txt'

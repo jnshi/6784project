@@ -29,7 +29,7 @@ def per_file(f):
     wav_data, samplerate = ap.get_wav_data(wav_filename)
     framesamp = 1024
     hopsamp = 80
-    x = features.get_wav_data_as_feature(wav_data, framesamp, hopsamp)
+    x = features.get_wav_data_as_feature(wav_data, framesamp, hopsamp, True)
     y = features.get_txt_as_label_for_note(txt_filename, 60, samplerate, framesamp, hopsamp, len(x))
     start, end = ut.get_trim_indices(x)
 
