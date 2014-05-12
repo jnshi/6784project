@@ -14,4 +14,38 @@ def print_waveform(filename):
     plt.xlabel('Right speaker')
     plt.show()
 
+def print_singlefreq(filename, title):
+    f = audioprocessor.get_data(filename)
+    nframes = f.nframes
+    data = f.read_frames(nframes)
+    left = map(lambda x: x[0], data)
+    right = map(lambda x: x[1], data)
+    N = 1024
+    hopsamp = 80
 
+    X = util.stft(left, N, hopsamp)
+    t = X[300].T
+
+    plt.plot(range(len(t)), scipy.absolute(t))
+    plt.xlabel('frequency')
+    plt.ylabel('amplitude')
+    plt.title(title)
+    plt.show()
+
+def print_mapfreq(filename, title):
+    f = audioprocessor.get_data(filename)
+    nframes = f.nframes
+    data = f.read_frames(nframes)
+    left = map(lambda x: x[0], data)
+    right = map(lambda x: x[1], data)
+    N = 1024
+    hopsamp = 80
+
+    X = util.stft(left, N, hopsamp)
+
+    pylab.figure()
+    pylab.imshow(scipy.absolute(X.T), origin='lower', aspect='auto', interpolation='nearest')
+    pylab.xlabel('Time')
+    pylab.ylabel('Frequency')
+    pylab.title('C4 - M60 (AkPnCGdD)')
+    pylab.show()
