@@ -63,7 +63,7 @@ trill2 = 'TR2'
 staccato = 'ST'
 
 '''Used for ISOL'''
-def parse_file(path):
+def parse_filename(path):
     name = ntpath.basename(path)
     name = name[0:len(name)-3] # remove extension
     div = name.split('_')
@@ -75,22 +75,24 @@ def get_ext(filename):
 def set_ext(filename, ext):
     return splitext(filename)[0] + ext
 
-def get_midi(filename);
-    return set_ext(filename, 'mid')
+def get_midi(filename):
+    return set_ext(filename, '.mid')
 
 def get_wav(filename):
-    return set_ext(filename, 'wav')
+    return set_ext(filename, '.wav')
+
+def get_txt(filename):
+    return set_ext(filename, '.txt')
+
+
 
 '''Standard train and test data'''
 
+
 dir_notes = join(data_isol, notes)
-dir_rand = 
 
 
-
-
-
-
+    
 
 '''Test method'''
 def test():

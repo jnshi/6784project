@@ -9,28 +9,29 @@ from sklearn import svm
 import audioprocessor as ap
 import dirs
 import experiments as exp
+import features
 import util
 
-filename = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO/MAPS_ISOL_NO_M_S0_M60_AkPnCGdD.wav'
+filename = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO'
 
-def train_single_svm(note, files):
-    X = []
-    Y = []
-    for f in files:
-        file_info = dirs.parse_file(f)
-        if (file_info['mm'] == note):
-            Y.append(1)
-        else:
-            Y.append(0)
+X = []
+Y = []
 
-        data = ap.get_data(filename)
-        left = ap.get_left(data)
-        trim = ut.trim_array(left)
-        x = ut.stft(trim, 1024, 80)
-        X.append(x)
+files = dirs.get_files_with_extension(filename, '.mid')
+print len(files)
 
-X = [x]
-y = [1]
+for f in files:
+    wav_filename = dirs.get_wav(f)
+    txt_filename = dirs.get_txt(f)
+    wf = ap.get_wav_file(wav_filename)
+    framesamp = 1024
+    hopsamp = 80
+    x = features.get_wav_as_feature(wav_filename)
+    y = features.get_txt_as_label_for_note(txt_filename, 60, wf.samplerate, len(x))
+    print len(x)
+    X.extend(x)
+    Y.extend(y)
+    break
 
-clf = svm.SVC()
-clf.fit()
+
+filename = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO/MAPS_ISOL_NO_F_S0_M21_AkPnCGdD.mid'
