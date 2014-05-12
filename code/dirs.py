@@ -19,8 +19,18 @@ def get_files(directory, recursive=True, absolute=True):
         directories.extend(ds)
     return files
 
-def get_files_with_extension(directory, extension, absolute=True):
-    return filter(lambda f: splitext(f)[1] == extension, get_files(directory, absolute))
+def get_files_with_extension(directory, extension, recursive=True, absolute=True):
+    return filter(lambda x: get_ext(x) == extension, get_files(directory, recursive, absolute))
+
+def order_files_by_extension(directory, recursive=True, absolute=True):
+    files = get_files(directory, recursive, absolute)
+    dic = {}
+    for f in files:
+        ext = get_ext(f)
+        if ext not in dic:
+            dic[ext] = []
+        dic[ext].append(f)
+    return dic
 
 def segment_files_by_percentage(split, files):
     number = map(lambda x: int(math.floor(x * len(files))), split)
@@ -59,6 +69,30 @@ def parse_file(path):
     div = name.split('_')
     return {'ps' : div[2], 'i0' : div[3], 'ss' : int(div[4][1:]), 'mm' :  int(div[5][1:])}
 
+def get_ext(filename):
+    return splitext(filename)[1]
+
+def set_ext(filename, ext):
+    return splitext(filename)[0] + ext
+
+def get_midi(filename);
+    return set_ext(filename, 'mid')
+
+def get_wav(filename):
+    return set_ext(filename, 'wav')
+
+'''Standard train and test data'''
+
+dir_notes = join(data_isol, notes)
+dir_rand = 
+
+
+
+
+
+
+
+'''Test method'''
 def test():
     files = get_files(join(data_isol, notes), False, True)
     f = files[0]

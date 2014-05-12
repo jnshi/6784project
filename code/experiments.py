@@ -2,7 +2,7 @@ import audioprocessor
 import matplotlib.pyplot as plt
 
 def print_waveform(filename):
-    f = audioprocessor.get_data(filename)
+    f = audioprocessor.get_wav_file(filename)
     data = f.read_frames(f.nframes)
 
     plt.subplot(2, 1, 1)
@@ -15,7 +15,7 @@ def print_waveform(filename):
     plt.show()
 
 def print_singlefreq(filename, title):
-    f = audioprocessor.get_data(filename)
+    f = audioprocessor.get_wav_file(filename)
     nframes = f.nframes
     data = f.read_frames(nframes)
     left = map(lambda x: x[0], data)
@@ -33,7 +33,7 @@ def print_singlefreq(filename, title):
     plt.show()
 
 def print_mapfreq(filename, title):
-    f = audioprocessor.get_data(filename)
+    f = audioprocessor.get_wav_file(filename)
     nframes = f.nframes
     data = f.read_frames(nframes)
     left = map(lambda x: x[0], data)
@@ -47,5 +47,5 @@ def print_mapfreq(filename, title):
     pylab.imshow(scipy.absolute(X.T), origin='lower', aspect='auto', interpolation='nearest')
     pylab.xlabel('Time')
     pylab.ylabel('Frequency')
-    pylab.title('C4 - M60 (AkPnCGdD)')
+    pylab.title(title)
     pylab.show()
