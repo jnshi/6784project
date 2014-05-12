@@ -22,8 +22,11 @@ Y = []
 
 samples_per_file = 10
 
-@profile
+num = 0
+
+#@profile
 def per_file(f):
+    global num, X, Y
     wav_filename = dirs.get_wav(f)
     txt_filename = dirs.get_txt(f)
     wav_data, samplerate = ap.get_wav_data(wav_filename)
@@ -43,14 +46,21 @@ def per_file(f):
     X.extend(copy.deepcopy(subx))
     Y.extend(copy.deepcopy(suby))
 
-@profile
+    num += 1
+    if num % 50 == 0:
+        print num
+
+#@profile
 def test():
     filename = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO'
 
     files = dirs.get_files_with_extension(filename, '.mid')
-    files = files[:80]
+#    files = files[:80]
 
     map(per_file, files)
 
+    clf = svm.SVC()
+    clf.fit(X, Y)
+ 
 test()
 # cProfile.run('re.compile(test())')
