@@ -26,7 +26,7 @@ for f in files:
     wf = ap.get_wav_file(wav_filename)
     framesamp = 1024
     hopsamp = 80
-    x = features.get_wav_as_feature(wav_filename)
+    x = features.get_wav_as_feature(wav_filename, True)
     y = features.get_txt_as_label_for_note(txt_filename, 60, wf.samplerate, len(x))
     print len(x)
     X.extend(x)
