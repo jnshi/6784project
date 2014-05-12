@@ -6,14 +6,21 @@ def stft(x, fs, framesz, hop):
     framesamp = int(framesz*fs)
     hopsamp = int(hop*fs)
     w = scipy.hamming(framesamp)
-    X = scipy.array([scipy.fft(w*x[i:i+framesamp]) 
+    X = scipy.array([scipy.rfft(w*x[i:i+framesamp]) 
                      for i in range(0, len(x)-framesamp, hopsamp)])
     return X
 
-def frames_to_windows(nframes, framesamp, hopsamp):
-    return [[i:i+framesamp] for i in range(0, nframes-framesamp, hopsamp)]
+def frame_to_window(frame, framesamp, hopsamp):
+    swindow = (frame - framesamp) / hopsamp + 1
+    swindow = swindow if swindow > 0 else 0
+    ewindow = frame / hopsamp
+    return (swindow, ewindow)
 
 def trim_array(X):
+    start, end = get_trim_indices(X)
+    return X[start:end]
+
+def get_trim_indices(X):
     start = 0
     end = len(X)
     for i in range(len(X)):
@@ -24,7 +31,7 @@ def trim_array(X):
         if (np.count_nonzero(X[i]) != 0):
             end = i
             break
-    return X[start-1:end+1]
+    return (start-1, end+1)
 
 # http://docs.scipy.org/doc/scipy-0.13.0/reference/generated/scipy.signal.decimate.html#scipy.signal.decimate
 def downsample(x, q):
@@ -45,3 +52,21 @@ def istft(X, fs, T, hop):
     for n,i in enumerate(range(0, len(x)-framesamp, hopsamp)):
         x[i:i+framesamp] += scipy.real(scipy.ifft(X[n]))
     return x
+
+'''
+def frames_to_windows(frame, framesamp, hopsamp):
+    window = 0
+    swindow = -1
+    sframe = window * hopsamp
+    while frame > sframe:
+        sframe = window * hopsamp
+        eframe = sframe + framesamp
+        if frame < eframe and swindow == -1:
+            swindow = window
+        window +=1
+    ewindow = window - 1
+    return (swindow, ewindow)
+'''
+
+
+

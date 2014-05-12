@@ -1,0 +1,13 @@
+Partition of a set of 221601 objects. Total size = 33131368 bytes.
+ Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+     0  99190  45 11901016  36  11901016  36 str
+     1  55515  25  4952040  15  16853056  51 tuple
+     2    671   0  2319080   7  19172136  58 dict of module
+     3  13827   6  1769856   5  20941992  63 types.CodeType
+     4  13604   6  1632480   5  22574472  68 function
+     5    994   0  1386160   4  23960632  72 dict (no owner)
+     6      2   0  1340064   4  25300696  76 guppy.heapy.heapyc.NodeGraph
+     7   1231   1  1149160   3  26449856  80 dict of type
+     8   1231   1  1109992   3  27559848  83 type
+     9    436   0   456928   1  28016776  85 dict of matplotlib.font_manager.FontEntry
+<633 more rows. Type e.g. '_.more' to view.>
