@@ -3,6 +3,7 @@ import numpy as np
 import pylab
 from scikits.audiolab import play
 import scipy
+from sklearn.multiclass import OneVsRestClassifier
 from sklearn import svm
 import random
 import cProfile
@@ -33,7 +34,7 @@ def per_file(f):
     framesamp = 1024
     hopsamp = 80
     x = features.get_wav_data_as_feature(wav_data, framesamp, hopsamp)
-    y = features.get_txt_as_label_for_note(txt_filename, 60, samplerate, framesamp, hopsamp, len(x))
+    y = features.get_txt_as_label(txt_filename, samplerate, framesamp, hopsamp, len(x))
     start, end = ut.get_trim_indices(x)
 
     subx = x[start: end]
@@ -59,7 +60,7 @@ def test():
 
     map(per_file, files)
 
-    clf = svm.SVC()
+    clf = OneVsRestClassifier(svm.SVC(kernel='linear'))
     clf.fit(X, Y)
  
 test()
