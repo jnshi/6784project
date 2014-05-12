@@ -9,37 +9,29 @@ import audioprocessor
 import experiments
 import util
 
-filename = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO/MAPS_ISOL_NO_F_S0_M23_AkPnCGdD.wav'
+filename = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO/MAPS_ISOL_NO_M_S0_M60_AkPnCGdD.wav'
 
 # Sndfile(filename, mode=r, Format format=None, int channels=0, int samplerate=0)
 
 f = audioprocessor.get_data(filename)
-print f.channels
-data = f.read_frames(f.nframes)
+nframes = f.nframes
+data = f.read_frames(nframes)
 left = map(lambda x: x[0], data)
 right = map(lambda x: x[1], data)
 fs = f.samplerate
-framesz = f.nframes / float(fs)
-hop = .020
+N = 1024
+hopsamp = 80
 
-X = util.stft(left, fs, framesz, hop)
+X = util.stft(left, N, hopsamp)
+
+
 pylab.figure()
 pylab.imshow(scipy.absolute(X.T), origin='lower', aspect='auto', interpolation='nearest')
 pylab.xlabel('Time')
-pylabel.ylabel('Frequency')
+pylab.ylabel('Frequency')
+pylab.title('C4 - M60 (AkPnCGdD)')
 pylab.show()
 
-xhat = util.istft(X, fs, T, hop)
-
-T1 = int(.1*fs)
-
-pylab.figure()
-pylab.plot(t[:T1], x[:T1], t[:T1], xhat[:T1])
-pylab.xlabel('Time (seconds)')
-
-pylab.figure()
-pylab.plot(t[-T1:], x[-T1:], t[-T1:], xhat[-T1:])
-pylab.xlabel('Time (seconds)')
 
 '''
 X = util.stft(data, fs, framesz, hop)
@@ -120,4 +112,3 @@ def processWav(filename, channel):
     return centroids, frequencies, volumes
 
 
-processWav(filename, 1)
