@@ -11,8 +11,7 @@ def stft(x, fs, framesz, hop):
     return X
 
 def frames_to_windows(nframes, framesamp, hopsamp):
-    pass
-#    return [[i:i+framesamp] for i in range(0, nframes-framesamp, hopsamp)]
+    return [[i:i+framesamp] for i in range(0, nframes-framesamp, hopsamp)]
 
 def trim_array(X):
     start = 0
