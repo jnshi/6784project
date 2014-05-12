@@ -12,7 +12,10 @@ def get_mid_data(filename):
 def get_wav_data(filename):
     assert dirs.get_ext(filename) == '.wav'
     f = Sndfile(filename, 'r')
-    return f.read_frames(f.nframes)
+    data = f.read_frames(f.nframes)
+    samplerate = f.samplerate
+    f.close()
+    return (data, samplerate)
 
 def get_wav_file(filename):
     assert dirs.get_ext(filename) == '.wav'
@@ -25,10 +28,10 @@ def compare_channels(data):
     return True
 
 def get_left(data):
-    return map(lambda x: x[0], data)
+    return data[:,0]
 
 def get_right(data):
-    return map(lambda x: x[1], data)
+    return data[:,1]
 
 # works on single channel data only
 def downsample(data, ntimes):
