@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import util
 import scipy
 import pylab
+import numpy as np
 
 def print_waveform(filename):
     f = audioprocessor.get_wav_file(filename)
@@ -60,8 +61,8 @@ def print_discriminitive_results():
     ptaf = [214, 269, 269, 328, 263, 284, 268, 238, 305, 266]
     pfat = [2724, 2800, 2774, 2580, 2745, 2559, 2689, 2726, 2539, 2644]
     pfaf = [3384, 3329, 3329, 3270, 3335, 3314, 3330, 3360, 3293, 3332]
-    total = [float(ptat[i]+ptaf[i]+pfat[i]+pfaf[i]) for i in range(len(ptat))]
 
+    total = [float(ptat[i]+ptaf[i]+pfat[i]+pfaf[i]) for i in range(len(ptat))]
     perptat = [ptat[i]/total[i] for i in range(len(ptat))]
     perptaf = [ptaf[i]/total[i] for i in  range(len(ptaf))]
     perpfat = [pfat[i]/total[i] for i in range(len(ptaf))]
@@ -75,8 +76,47 @@ def print_discriminitive_results():
     plt.ylabel('Percentage')
     plt.legend(bbox_to_anchor=(1.02, 1), loc=2)
     plt.show()
+
+def print_comparision_one():
+    bar_width = .2
+    index = np.arange(4)
+    ptat = [223, 167, 450, 1804]
+    pfaf = [620, 2516, 4804, 13619]
+    ptaf = [1005, 3184, 387, 1465]
+    pfat = [133, 1927, 359, 1112]
+    total = [float(ptat[i]+ptaf[i]+pfat[i]+pfaf[i]) for i in range(len(ptat))]
+
+    perptat = [ptat[i]/total[i] for i in range(len(ptat))]
+    perptaf = [ptaf[i]/total[i] for i in  range(len(ptaf))]
+    perpfat = [pfat[i]/total[i] for i in range(len(ptaf))]
+    perpfaf = [pfaf[i]/total[i] for i in range(len(pfaf))]
+    opacity = .4 
+
+    rects1 = plt.bar(index, perptat, bar_width,
+        color = 'r',
+        alpha = opacity,
+        label = 'Predict True, Actual True')
+    rects2 = plt.bar(index + bar_width, perptaf, bar_width,
+        color='b',
+        alpha = opacity,
+        label = 'Predict True, Actual False')
+    rects3 = plt.bar(index + 2*bar_width, perpfat, bar_width,
+        color='g',
+        alpha = opacity,
+        label = 'Predict False, Actual True')
+    rects4 = plt.bar(index + 3*bar_width, perpfaf, bar_width,
+        color='y',
+        alpha = opacity,
+        label= 'Predict False, Actual False')
+
+    plt.xticks(index + 2*bar_width, ('dis 1/3', 'dis 3/9', 'struct 1/3', 'struct 3/9'))
+    plt.xlabel('Group')
+    plt.ylabel('Percentage')
+    plt.legend()
+    plt.show()
 '''
 filename = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO/MAPS_ISOL_NO_F_S0_M28_AkPnCGdD.wav'
 print_mapfreq(filename, 'M23 (AkPnCGdD)')
 '''
-print_discriminitive_results()
+
+print_comparision_one()
