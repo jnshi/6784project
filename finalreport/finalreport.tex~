@@ -33,11 +33,11 @@
 % Employ the following version of the ``usepackage'' statement for
 % submitting the draft version of the paper for review.  This will set
 % the note in the first column to ``Under review.  Do not distribute.''
-\usepackage{icml2010} 
+% \usepackage{icml2010} 
 % Employ this version of the ``usepackage'' statement after the paper has
 % been accepted, when creating the final version.  This will set the
 % note in the first column to ``Appearing in''
-%\usepackage[accepted]{icml2010}
+\usepackage[accepted]{icml2010}
 
 
 % The \icmltitle you define below is probably too long as a header.
@@ -71,12 +71,12 @@
 ]
 
 \begin{abstract} 
-We investigate the use of maximum-margin CRF classifiers in the automated
+We investigate the use of maximum-margin Markov classifiers in the automated
 transcription of polyphonic piano music.
 Existing work on this problem has involved separate and independent smoothing
-and classification steps. The use of a maximum-margin CRF classifier allows
-us to unify these two steps. We present evaluation results against a
-frame-by-frame one-vs-all SVM classifier.
+and classification steps. The use of a maximum-margin Markov classifier allows
+us to unify these two steps.
+% TODO
 \end{abstract} 
 
 
@@ -141,6 +141,7 @@ Features that we observe within a spectogram include:
 
 
 
+\pagebreak % TODO temporary fix for citation-pagebreak hyperref bug.
 Previous work on this task have focused mostly around:
 \begin{enumerate}
 \item Discriminative SVMs and CRFs trained to detect individual notes
@@ -235,13 +236,10 @@ in the signal. A maximum-margin Markov network then sets:
 for some vector $\w$ that we train using SVM methods, and some vector of
 features $\f_t(\x,\y)$.
 
-\subsection{Features}\label{features}
+\subsection{Features}
 We use the features suggested in \cite{poliner2006discriminative}.
 We use as our features essentially raw spectral data:
-A STFT of the audio data sampled at 5.5 kHz,
-an 1024-point Hanning window (185 milliseconds),
-and an 80-point advance between adjacent windows
-(for a 14.5-millisecond hop between successive frames).
+A STFT of the audio data sampled at $N$ = 1024 (128 milliseconds), an $N$-point Hanning window, and an 80 point advance between adjacent windows (for a 10-millisecond hop between successive frames).
 
 Since we are training a model that leverages correlations in note labels
 between adjacent time points, we also include the features from adjacent
@@ -264,14 +262,7 @@ time step of the note labeling.
 Training and testing data were sourced from the MAPS dataset 
 \cite{emiya2010multipitch}, a set of 31 GB of piano recordings in .wav format,
 recorded on varying pianos and in varying acoustic environments, with ground
-truth transcription labels provided.
-
-We downsampled the original 44.1kHz recordings by a factor of 8 to
-obtain 5.5kHz signals. After extracting the windows as described in section
-\ref{features}, we then used the first 2000 windows (or 30 seconds) of each
-recording.
-
-We separate our data into training and test sets.% TODO
+truth transcription labels provided. We separated our data into training and test sets.
 
 \section{Evaluation}
 % TODO
@@ -287,8 +278,6 @@ We first constructed and tested the method used by \cite{poliner2006discriminati
 \end{figure}
 
 
-\section{Further Work}
-
 
 \section{Conclusion}
 
@@ -297,8 +286,6 @@ BLAH BLAH BLAH
 % In the unusual situation where you want a paper to appear in the
 % references without citing it in the main text, use \nocite
 %\nocite{langley00}
-
-
 
 
 \section{Introductory Figures}
