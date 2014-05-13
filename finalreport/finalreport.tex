@@ -103,8 +103,14 @@ As is often convenient, we process this audio input to obtain samples of
 signal intensities in various frequencies over time. This is called the
 short-term fourier transform (STFT).
 
+\begin{figure}
+\includegraphics[scale=.13]{wave_m23.png}
+\caption{Wave of C1 (Low C)}
+\end{figure}
+
 Using the STFT, we obtain spectograms, which are plots of which
 particular frequencies are present at any particular time within a signal.
+
 Features that we observe within a spectogram include:
 \begin{description}
 \item[Overtones.]
@@ -136,6 +142,19 @@ Features that we observe within a spectogram include:
   incorrectly detected beat frequencies as new note onsets
   \cite{marolt2004connectionist}. 
 \end{description}
+
+\begin{figure}
+\includegraphics[scale=.4]{singlefreq_m23.png}
+\caption{Frequency graph shortly after onset of C1 (Low C)}
+\includegraphics[scale=.4]{singlefreq_m28.png}
+\caption{Frequency graph shortly after onset of E1 (Low E)}
+\end{figure}
+
+
+\begin{figure}
+\includegraphics[scale=.12]{freq_m23.png}
+\caption{Frequency map of note C1 (Low C)}
+\end{figure}
 
 
 \pagebreak % TODO temporary fix for citation-pagebreak hyperref bug.
@@ -233,6 +252,9 @@ for some vector $\w$ that we train using SVM methods, and some vector of
 features $\f_t(\x,\y)$.
 
 \subsection{Features}
+We follow \cite{} 
+
+
 We use as our features essentially raw spectral data:
 A STFT of the audio data sampled at % TODO how many samples per second
 using the % TODO which type of window

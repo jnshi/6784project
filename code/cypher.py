@@ -11,106 +11,166 @@ import re
 from guppy import hpy
 import gc
 import copy
+import shutil
 
 import audioprocessor as ap
 import dirs
-import experiments as exp
 import features
 import util as ut
 
-X = []
-Y = []
+posX = []
+posY = []
+negX = []
+negY = []
 
-samples_per_file = 5
+positive_samples_per_file = 100
+negative_samples_per_file = 3
 
 framesamp = 1024
 hopsamp = 80
 
 num = 0
 
-
-def get_data(f, sub = True):
+def get_data(f, note, sub = True):
     global framesamp, hopsamp
     wav_filename = dirs.get_wav(f)
     txt_filename = dirs.get_txt(f)
     wav_data, samplerate = ap.get_wav_data(wav_filename)
     x = features.get_wav_data_as_feature(wav_data, framesamp, hopsamp, True)
-    y = features.get_txt_as_label(txt_filename, samplerate/8, framesamp, hopsamp, len(x), True)
+    y = features.get_txt_as_label_for_note(txt_filename, note, samplerate/8, framesamp, hopsamp, len(x), True)
 
-    if sub:
-        start, end = ut.get_trim_indices(x)
 
-        subx = x[start: end]
-        suby = y[start: end]
+    start, end = ut.get_trim_indices(x)
+    x = x[start:end]
+    y = y[start:end]
 
-        if (len(subx) > samples_per_file):
-            ind = random.sample(range(len(subx)), samples_per_file)
-            subx = [subx[i] for i in ind]
-            suby = [suby[i] for i in ind]
-    else:
-        subx = x
-        suby = y
+    posx = []
+    posy = []
+    negx = []
+    negy = []
 
-    return (copy.deepcopy(subx), copy.deepcopy(suby))
+    # balance
+    for i in range(len(x)):
+        if y[i]:
+            posx.append(x[i])
+            posy.append(y[i])
+        else:
+            negx.append(x[i])
+            negy.append(y[i])
+
+    return (copy.deepcopy(posx), copy.deepcopy(posy), copy.deepcopy(negx), copy.deepcopy(negy))
    
 
 #@profile
-def per_file(f):
-    global num, X, Y
-    subx, suby = get_data(f, True)
-    X.extend(copy.deepcopy(subx))
-    Y.extend(copy.deepcopy(suby))
+def per_file(note):
+    global num, posX, posY, negX, negY
+    def per_file_help(f):
+        posx, posy, negx, negy = get_data(f, note, True)
+        if (len(posx) > positive_samples_per_file):
+            indices = random.sample(range(len(posx)), positive_samples_per_file)
+        else:
+            indices = range(len(posx))
 
-    num += 1
-    if num % 10 == 0:
-        print num
+        posX.extend([posx[i] for i in indices])
+        posY.extend([posy[i] for i in indices])
+        
+        if (len(negx) > negative_samples_per_file):
+            indices = random.sample(range(len(negx)), negative_samples_per_file)
+        else:
+            indices = range(len(negx))
 
-def svm_test(clf, files):
-    tX = []
-    tY = []
+        negX.extend([negx[i] for i in indices])
+        negY.extend([negy[i] for i in indices])
+
+    return per_file_help
+
+def svm_test(clf, note, files):
+    posX = []
+    posY = []
+    negX = []
+    negY = []
 
     for f in files:
-        subx, suby = get_data(f, True)
-        tX.extend(subx)
-        tY.extend(suby)
+        posx, posy, negx, negy = get_data(f, note, True)
 
-    pY = clf.predict(tX)
+        if (len(posx) > positive_samples_per_file):
+            indices = random.sample(range(len(posx)), positive_samples_per_file)
+        else:
+            indices = range(len(posx))
+
+        posX.extend([posx[i] for i in indices])
+        posY.extend([posy[i] for i in indices])
+
+        if (len(negx) > negative_samples_per_file):
+            indices = random.sample(range(len(negx)), negative_samples_per_file)
+        else:
+            indices = range(len(negx))
+
+        negX.extend([negx[i] for i in indices])
+        negY.extend([negy[i] for i in indices])
+
+
+    tX = []
+    tX.extend(posX)
+    tX.extend(negX)
+    tY = []
+    tY.extend(posY)
+    tY.extend(negY)
+
+    pY = clf.predict(np.array(tX))
     ptaf = 0 # predict, actual
     ptat = 0
     pfat = 0
     pfaf = 0
-    for py, ty in zip(pY, ty):
-        for i in range(len(py)):
-            if py[i] and ty[i]:
-                ptat += 1
-            elif py[i] and not ty[i]:
-                ptaf += 1
-            elif not py[i] and ty[i]:
-                pfat += 1
-            else:
-                pfaf += 1
-    return (ptaf, ptat, pfat, pfaf)
+    for py, ty in zip(pY, tY):
+        if py and ty:
+            ptat += 1
+        if py and not ty:
+            ptaf += 1
+        if not py and ty:
+            pfat += 1
+        if not py and not ty:
+            pfaf += 1
+    return (ptat, ptaf, pfat, pfaf)
 
 #@profile
 def test():
-    notes_train = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO'
-    randomchords_train = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/RAND/M21-108'
-    randomchords_test = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/RAND/M36-95'
+    train_dir = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL'
+    test_dir = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/RAND'
 
-    files = []
-    files.extend(dirs.get_files_with_extension(notes_train, '.mid'))
-    files.extend(dirs.get_files_with_extension(randomchords_train, '.mid'))
-    print 'num files '+str(len(files))
+    note = 60
 
-    map(per_file, files)
-   
-    print len(X) 
-    clf = svm.SVC(kernel='linear')
-    clf = OneVsRestClassifier(svm.SVC(kernel='linear'))
-    clf.fit(X, Y)
+    positive = 0
+    negative = 0
+    train_files = []
+    train_files.extend(dirs.get_files_with_extension(train_dir, '.mid'))
+    print 'num files '+str(len(train_files))
 
-    results = svm_test(clf, dirs.get_files_with_extension(randomchords_test, '.mid'))
-    print results
+    map(per_file(note), train_files)
+  
+    for n in range(100, 1001, 100): 
+        print 'posX ' + str(len(posX))
+        print 'negX ' + str(len(negX))
+
+        posind = random.sample(range(len(posX)), n)
+        negind = random.sample(range(len(negX)), n)
+
+        X = []
+        X.extend([posX[i] for i in posind])
+        X.extend([negX[i] for i in negind])
+
+        Y = []
+        Y.extend([posY[i] for i in posind])
+        Y.extend([negY[i] for i in negind])
+
+        clf = svm.SVC(kernel='linear')
+        clf.fit(np.array(X), np.array(Y))
+
+        test_files = []
+        test_files.extend(dirs.get_files_with_extension(test_dir, '.mid'))
+
+        results = svm_test(clf, i, test_files)
+        print str(n) + ': ' + str(' '.join(results))
 
 test()
 # cProfile.run('re.compile(test())')

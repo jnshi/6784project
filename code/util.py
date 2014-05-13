@@ -2,14 +2,6 @@ import numpy as np
 import scipy, pylab
 import scipy.signal
 
-def stft(x, fs, framesz, hop):
-    framesamp = int(framesz*fs)
-    hopsamp = int(hop*fs)
-    w = scipy.hamming(framesamp)
-    X = scipy.array([scipy.rfft(w*x[i:i+framesamp]) 
-                     for i in range(0, len(x)-framesamp, hopsamp)])
-    return X
-
 def frame_to_window(frame, framesamp, hopsamp, nwindows):
     swindow = (frame - framesamp) / hopsamp + 1
     swindow = swindow if swindow > 0 else 0
@@ -42,7 +34,7 @@ def downsample(x, q):
 # Poliner: framesamp = 1024, hopsamp = 80
 def stft(x, framesamp, hopsamp):
     w = scipy.hamming(framesamp)
-    X = scipy.array([scipy.fft(w*x[i:i+framesamp]) 
+    X = scipy.array([np.fft.rfft(w*x[i:i+framesamp]) 
                      for i in range(0, len(x)-framesamp, hopsamp)])
     return X
 
