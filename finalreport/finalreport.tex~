@@ -288,8 +288,6 @@ output which could be directly compared with the midi files and measured for: no
 
 We first constructed and tested the method used by \cite{poliner2006discriminative} in identifying individual notes. In an attempt to replicate Figure 2, we tested the classification accuracy of an SVM trained to recognize middle C (M60). For this, we used the ISOL directory (individual notes, chromatics, trills, repeated notes, stacatto) as the training data and the RAND directory (random chords) as the test data. Despite following the method and features described in \cite{poliner2006discriminative} we found that the baseline accuracy of the SVM did not change as the number of samples increased significantly.
 
-\includegraphics[scale=.3]{discriminitive.png}
-
 
 
 \section{Conclusion}

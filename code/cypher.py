@@ -23,8 +23,8 @@ posY = []
 negX = []
 negY = []
 
-positive_samples_per_file = 2000
-negative_samples_per_file = 2000
+positive_samples_per_file = 20000
+negative_samples_per_file = 20000
 
 windows_per_file = 2000
 
@@ -42,8 +42,9 @@ def get_data(f, note, sub = True):
     y = features.get_txt_as_label_for_note(txt_filename, note, samplerate/8, framesamp, hopsamp, len(x), True)
 
     start, end = ut.get_trim_indices(x)
-    x = x[start:start+windows_per_file]
-    y = y[start:start+windows_per_file]
+    end = min(end, windows_per_file + start)
+    x = x[start:end]
+    y = y[start:end]
 
     posx = []
     posy = []
@@ -71,7 +72,6 @@ def per_file(note):
             indices = random.sample(range(len(posx)), positive_samples_per_file)
         else:
             indices = range(len(posx))
-
         posX.extend([posx[i] for i in indices])
         posY.extend([posy[i] for i in indices])
         
@@ -136,38 +136,49 @@ def svm_test(clf, note, files):
 
 #@profile
 def test():
+    global posX, negX, posY, negY
 #    train_dir = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL'
 #    test_dir = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/RAND'
-    train_file = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_2/AkPnCGdD/MUS/MAPS_MUS-chpn_op10_e12_AkPnCGdD.mid'
-    test_file = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_2/AkPnCGdD/MUS/MAPS_MUS-grieg_kobold_AkPnCGdD.mid'
+#    train_file = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_2/AkPnCGdD/MUS/MAPS_MUS-chpn_op10_e12_AkPnCGdD.mid'
+#    test_file = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_2/AkPnCGdD/MUS/MAPS_MUS-grieg_kobold_AkPnCGdD.mid'
+    filename = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_2/AkPnCGdD/MUS'
+    files = dirs.get_files_with_extension(filename, '.mid')        
     note = 60
+    
+    for nindex in range(1, 100):
+        posX = []
+        negX = []
+        posY = []
+        negY = []
 
-    positive = 0
-    negative = 0
-    train_files = []
-    train_files.extend([train_file])
+        nfiles = int(nindex*(nindex+1)/2)
+        ntrain = nfiles
+        ntest = 3*nfiles
 
-    map(per_file(note), train_files)
+        train_files = files[:nfiles]
+#        print 'train_files: ' + str(train_files)
 
-    print len(posX)
-    print len(negX)  
+        map(per_file(note), train_files)
 
-    X = []
-    X.extend(posX)
-    X.extend(negX)
+        print len(posX)
+        print len(negX)  
+        ind = random.sample(range(len(negX)), len(posX))
 
-    Y = []
-    Y.extend(posY)
-    Y.extend(negY)
+        X = []
+        X.extend(posX)
+        X.extend([negX[i] for i in ind])
 
-    clf = svm.SVC(kernel='linear')
-    clf.fit(np.array(X), np.array(Y))
+        Y = []
+        Y.extend(posY)
+        Y.extend([negY[i] for i in ind])
 
-    test_files = []
-    test_files.extend([test_file])
+        clf = svm.SVC(kernel='linear')
+        clf.fit(np.array(X), np.array(Y))
 
-    results = svm_test(clf, note, test_files)
-    print ' '.join([str(r) for r in results])
+        test_files = files[nfiles:nfiles+ntrain]
+#        print 'test_files: ' + str(test_files)
+        results = svm_test(clf, note, test_files)
+        print str(nfiles) + ' ' + ' '.join([str(r) for r in results])
 
 test()
 # cProfile.run('re.compile(test())')
