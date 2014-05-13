@@ -1,7 +1,7 @@
 from scikits.audiolab import *
 import midi
 import numpy as np
-import scipy.signal
+import scipy.signal as signal
 
 import dirs
 

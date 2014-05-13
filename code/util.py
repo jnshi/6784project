@@ -10,10 +10,11 @@ def stft(x, fs, framesz, hop):
                      for i in range(0, len(x)-framesamp, hopsamp)])
     return X
 
-def frame_to_window(frame, framesamp, hopsamp):
+def frame_to_window(frame, framesamp, hopsamp, nwindows):
     swindow = (frame - framesamp) / hopsamp + 1
     swindow = swindow if swindow > 0 else 0
     ewindow = frame / hopsamp
+    ewindow = ewindow if ewindow < nwindows else nwindows
     return (swindow, ewindow)
 
 def trim_array(X):
