@@ -11,10 +11,11 @@ import re
 import gc
 import copy
 import time
+import sys
 
 import audioprocessor as ap
 import dirs
-import experiments as exp
+#import experiments as exp
 import features
 import util as ut
 import itertools as it
@@ -32,6 +33,7 @@ def per_file(f, X, Y):
     hopsamp = 80
     x = features.get_wav_data_as_feature(wav_data, framesamp, hopsamp, True)
     y = features.get_txt_as_label_for_note(txt_filename, 60, samplerate/8, framesamp, hopsamp, len(x))
+#    y = features.get_txt_as_label_for_note(txt_filename, 102, samplerate/8, framesamp, hopsamp, len(x))
     start, end = ut.get_trim_indices(x)
     trunc = 2000
     if end-start > trunc:
@@ -59,21 +61,22 @@ def test(nfiles):
     X_tst = []
     Y_tst = []
     ntrain = nfiles
-    ntest = 3*nfiles
+    ntest = 5*nfiles
     print("Training/testing with %d/%d files." % (ntrain,ntest))
     start = time.clock()   
  
     filename = '../maps/MAPS_AkPnCGdD_2/AkPnCGdD/MUS'
+    #filename = '../maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO'
     files = dirs.get_files_with_extension(filename, '.mid')
-    train_files = files[:nfiles]
+    train_files = files[:ntrain]
     print("\t" + str(train_files))
-    test_files = files[nfiles:nfiles+ntrain]
+    #test_files = files[ntrain:ntest+ntrain]
     # for legit testing
-    # test_files = files[-3*ntest:]
+    test_files = files[-ntest:]
     map(per_file, train_files,
-      it.repeat(X, nfiles), it.repeat(Y, nfiles))
+      it.repeat(X, ntrain), it.repeat(Y, ntrain))
     map(per_file, test_files,
-      it.repeat(X_tst, 3*nfiles), it.repeat(Y_tst, nfiles))
+      it.repeat(X_tst, ntest), it.repeat(Y_tst, ntest))
 
     end = time.clock()
     print("\tRead time: %f" % (end - start))
@@ -90,7 +93,17 @@ def test(nfiles):
     start = time.clock()   
 
     Y_pred = clf.predict(X_tst)
-    comp = zip(Y_tst, Y_pred)
+    comp = []
+    for i in range(len(Y_tst)):
+      for j in range(len(Y_tst[i])):
+        comp.append((Y_tst[i][j], Y_pred[i][j]))
+        print Y_tst[i][j],
+      print
+      for j in range(len(Y_tst[i])):
+        print Y_pred[i][j],
+      print
+      print
+
     print("\tTrue positives: %d" % comp.count((1,1)))
     print("\tTrue negatives: %d" % comp.count((0,0)))
     print("\tFalse positives: %d" % comp.count((0,1)))
@@ -101,6 +114,7 @@ def test(nfiles):
     print("\tTest time: %f" % (end - start))
 
 
-for i in range(1,100):
-  test(int(i*(i+1)/2))
+#for i in range(1,100):
+#  test(int(i*(i+1)/2))
+test(int(sys.argv[1]))
 # cProfile.run('re.compile(test())')
