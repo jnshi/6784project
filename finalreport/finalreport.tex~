@@ -274,7 +274,7 @@ We first constructed and tested the method used by \cite{poliner2006discriminati
 
 \begin{figure}
 \includegraphics[scale=.15]{discriminitive.png}
-\caption{Red = predicted true, actual true. Blue = predictive positive, actual negative. Green = predicted negative, actual positive. Yellow = predicted negative, actual negative.} 
+\caption{Charts the ability of the classifier. Red = predicted true, actual true. Blue = predictive positive, actual negative. Green = predicted negative, actual positive. Yellow = predicted negative, actual negative.} 
 \end{figure}
 
 
