@@ -98,18 +98,14 @@ negatives), and the lack of a field-accepted feature vector/technique for
 extracting the data. 
 
 \subsection{Feature analysis}
-An audio signal consists of a series of samples of wave displacement over time.
+An audio signal consists of a series of samples of wave displacement over time. See figure ~\ref{fig:wave} on page \pageref{fig:wave}.
 As is often convenient, we process this audio input to obtain samples of
-signal intensities in various frequencies over time. This is called the
-short-term fourier transform (STFT).
+signal intensities in various frequencies over time.  This is called the
+short-term fourier transform (STFT). See figure \ref{fig:freqs} on page \pageref{fig:freqs}.
 
-\begin{figure}
-\includegraphics[scale=.13]{wave_m23.png}
-\caption{Wave of C1 (Low C)}
-\end{figure}
 
 Using the STFT, we obtain spectograms, which are plots of which
-particular frequencies are present at any particular time within a signal.
+particular frequencies are present at any particular time within a signal. See figure \ref{fig:single_freqs} on page \pageref{fig:single_freqs}.
 
 Features that we observe within a spectogram include:
 \begin{description}
@@ -143,18 +139,6 @@ Features that we observe within a spectogram include:
   \cite{marolt2004connectionist}. 
 \end{description}
 
-\begin{figure}
-\includegraphics[scale=.4]{singlefreq_m23.png}
-\caption{Frequency graph shortly after onset of C1 (Low C)}
-\includegraphics[scale=.4]{singlefreq_m28.png}
-\caption{Frequency graph shortly after onset of E1 (Low E)}
-\end{figure}
-
-
-\begin{figure}
-\includegraphics[scale=.12]{freq_m23.png}
-\caption{Frequency map of note C1 (Low C)}
-\end{figure}
 
 
 \pagebreak % TODO temporary fix for citation-pagebreak hyperref bug.
@@ -288,13 +272,42 @@ output which could be directly compared with the midi files and measured for: no
 
 We first constructed and tested the method used by \cite{poliner2006discriminative} in identifying individual notes. In an attempt to replicate Figure 2, we tested the classification accuracy of an SVM trained to recognize middle C (M60). For this, we used the ISOL directory (individual notes, chromatics, trills, repeated notes, stacatto) as the training data and the RAND directory (random chords) as the test data. Despite following the method and features described in \cite{poliner2006discriminative} we found that the baseline accuracy of the SVM did not change as the number of samples increased significantly.
 
+\begin{figure}
+\includegraphics[scale=.15]{discriminitive.png}
+\caption{Red = predicted true, actual true. Blue = predictive positive, actual negative. Green = predicted negative, actual positive. Yellow = predicted negative, actual negative.} 
+\end{figure}
+
 
 
 \section{Conclusion}
 
+BLAH BLAH BLAH
+
 % In the unusual situation where you want a paper to appear in the
 % references without citing it in the main text, use \nocite
 %\nocite{langley00}
+
+
+\section{Introductory Figures}
+\begin{figure}
+\includegraphics[scale=.13]{wave_m23.png}
+\caption{Wave of C1 (Low C)}
+\label{fig:wave}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=.12]{freq_m23.png}
+\caption{Frequency map of note C1 (Low C)}
+\label{fig:freqs}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=.4]{singlefreq_m23.png}
+\caption{Frequency graph shortly after onset of C1 (Low C)}
+\includegraphics[scale=.4]{singlefreq_m28.png}
+\caption{Frequency graph shortly after onset of E1 (Low E)}
+\label{fig:single_freqs}
+\end{figure}
 
 \bibliography{finalreport}
 \bibliographystyle{icml2010}

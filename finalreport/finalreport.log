@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.1.9)  12 MAY 2014 23:09
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.1.9)  13 MAY 2014 02:20
 entering extended mode
  %&-line parsing enabled.
 **finalreport.tex
@@ -337,155 +337,84 @@ Overfull \hbox (5.1225pt too wide) in paragraph at lines 73--73
  [] 
  []
 
-<wave_m23.png, id=1, 1688.2272pt x 1031.2929pt>
-File: wave_m23.png Graphic file (type png)
- <use wave_m23.png>
 
-Package natbib Warning: Citation `marolt2004connectionist' on page 1 undefined 
-on input line 143.
-
-
-Underfull \hbox (badness 1215) in paragraph at lines 139--144
+Underfull \hbox (badness 1215) in paragraph at lines 135--140
 []\OT1/cmr/m/n/10 When two dis-tinct fre-quen-cies
  []
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+Underfull \vbox (badness 1325) has occurred while \output is active []
+
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
- <./wave_m23.png>]
-<singlefreq_m23.png, id=16, 586.8324pt x 442.2924pt>
-File: singlefreq_m23.png Graphic file (type png)
- <use singlefreq_m23.png>
-<singlefreq_m28.png, id=17, 586.8324pt x 442.2924pt>
-File: singlefreq_m28.png Graphic file (type png)
- <use singlefreq_m28.png>
-<freq_m23.png, id=18, 1940.24875pt x 1228.59pt>
-File: freq_m23.png Graphic file (type png)
- <use freq_m23.png>
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \hbox (badness 1184) in paragraph at lines 161--162
+]
+Underfull \hbox (badness 1184) in paragraph at lines 145--146
 []\OT1/cmr/m/n/10 Previous work on this task have fo-cused mostly
  []
 
+[2] <discriminitive.png, id=23, 1688.2272pt x 1031.2929pt>
+File: discriminitive.png Graphic file (type png)
 
-Package natbib Warning: Citation `ryynanen2005polyphonic' on page 2 undefined o
-n input line 165.
+<use discriminitive.png>
+Overfull \hbox (18.34566pt too wide) in paragraph at lines 276--277
+[][] 
+ []
 
+<wave_m23.png, id=25, 1688.2272pt x 1031.2929pt>
+File: wave_m23.png Graphic file (type png)
+ <use wave_m23.png>
+<freq_m23.png, id=26, 1940.24875pt x 1228.59pt>
+File: freq_m23.png Graphic file (type png)
+ <use freq_m23.png>
+<singlefreq_m23.png, id=27, 586.8324pt x 442.2924pt>
+File: singlefreq_m23.png Graphic file (type png)
+ <use singlefreq_m23.png>
+<singlefreq_m28.png, id=28, 586.8324pt x 442.2924pt>
+File: singlefreq_m28.png Graphic file (type png)
+ <use singlefreq_m28.png>
+(./finalreport.bbl
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Package natbib Warning: Citation `poliner2006discriminative' on page 2 undefine
-d on input line 165.
+ [3 <./discriminitive.png> <./wave_m23.png> <./freq_m23.png>]
+Underfull \hbox (badness 3942) in paragraph at lines 29--34
+[]\OT1/cmr/m/n/10 Emiya, Valentin, Badeau, Roland, and David,
+ []
 
+) [4 <./singlefreq_m23.png> <./singlefreq_m28.png>] [5
 
-Package natbib Warning: Citation `gang2009polyphonic' on page 2 undefined on in
-put line 166.
+] (./finalreport.aux)
 
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package natbib Warning: Citation `raphael2002automatic' on page 2 undefined on 
-input line 167.
-
-
-Package natbib Warning: Citation `marolt2004connectionist' on page 2 undefined 
-on input line 169.
-
-
-Package natbib Warning: Citation `bock2012polyphonic' on page 2 undefined on in
-put line 169.
-
-
-Package natbib Warning: Citation `5946322' on page 2 undefined on input line 17
-2.
-
-
-Package natbib Warning: Citation `5946322' on page 2 undefined on input line 17
-7.
-
-
-Package natbib Warning: Citation `nam2011classification' on page 2 undefined on
- input line 178.
-
-
-Package natbib Warning: Citation `costantini2013nmf' on page 2 undefined on inp
-ut line 179.
-
-
-Package natbib Warning: Citation `marolt2004connectionist' on page 2 undefined 
-on input line 181.
-
-
-Package natbib Warning: Citation `nam2011classification' on page 2 undefined on
- input line 182.
-
-
-Package natbib Warning: Citation `costantini2013nmf' on page 2 undefined on inp
-ut line 183.
-
-
-Package natbib Warning: Citation `bock2012polyphonic' on page 2 undefined on in
-put line 188.
-
-
-Package natbib Warning: Citation `poliner2006discriminative' on page 2 undefine
-d on input line 188.
-
-
-Package natbib Warning: Citation `marolt2004connectionist' on page 2 undefined 
-on input line 191.
-
-
-Package natbib Warning: Citation `gang2009polyphonic' on page 2 undefined on in
-put line 193.
-
-[2 <./singlefreq_m23.png> <./singlefreq_m28.png> <./freq_m23.png>]
-
-Package natbib Warning: Citation `Taskar03max-marginmarkov' on page 3 undefined
- on input line 209.
-
-
-Package natbib Warning: Citation `emiya2010multipitch' on page 3 undefined on i
-nput line 281.
-
-
-Package natbib Warning: Citation `poliner2006discriminative' on page 3 undefine
-d on input line 290.
-
-
-Package natbib Warning: Citation `bock2012polyphonic' on page 3 undefined on in
-put line 290.
-
-No file finalreport.bbl.
-
-Package natbib Warning: There were undefined citations.
-
-[3] (./finalreport.aux) ) 
+ ) 
 Here is how much of TeX's memory you used:
- 5560 strings out of 495061
- 76592 string characters out of 1182622
- 162827 words of memory out of 3000000
- 8653 multiletter control sequences out of 15000+50000
+ 5593 strings out of 495061
+ 77445 string characters out of 1182622
+ 163827 words of memory out of 3000000
+ 8683 multiletter control sequences out of 15000+50000
  11205 words of font info for 39 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 38i,12n,45p,256b,354s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/
-cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.p
-fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/sha
-re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-t
-exlive/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/font
-s/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/pub
-lic/amsfonts/cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi7.pf
-b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/shar
-e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texli
-ve/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/type
-1/public/amsfonts/cm/cmsl9.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
-fonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-sy7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb></u
-sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on finalreport.pdf (3 pages, 525539 bytes).
+ 38i,12n,45p,664b,396s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-texlive/fonts/type1/publ
+ic/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
+/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi5.p
+fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-tex
+live/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/t
+ype1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/public/a
+msfonts/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
+sl9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
+sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/tex
+mf-texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/
+fonts/type1/public/amsfonts/cm/cmti9.pfb>
+Output written on finalreport.pdf (5 pages, 632992 bytes).
 PDF statistics:
- 89 PDF objects out of 1000 (max. 8388607)
+ 97 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 
