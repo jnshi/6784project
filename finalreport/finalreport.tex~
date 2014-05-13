@@ -186,7 +186,7 @@ notes directly from the spectograms as features.
 \newcommand{\y}{\mathbf{y}}
 \newcommand{\w}{\mathbf{w}}
 \newcommand{\f}{\mathbf{f}}
-\newcommand{\t}{\mathbf{t}}
+\newcommand{\ttt}{\mathbf{t}}
 
 % TODO
 The core method being introduced is to leverage a
@@ -237,8 +237,8 @@ $\f_{\omega}(\x,\y) = \sum_t \f_{\omega}(\x,y_t,y_{t+1})$,
 at which point maximum-margin methods can find the vector $\w$ which minimizes
 the margin by which each training sample constraint is satisfied,
 this being:
-\[ \w^T(\f_{\omega}(\x,\t) - \f_{\omega}(\x,\y)) \ge \gamma \delta\t_{\x}(\y), \]
-with $\t$ being a ground truth labeling, $\delta\t_{\x}(\y)$ being the number
+\[ \w^T(\f_{\omega}(\x,\ttt) - \f_{\omega}(\x,\y)) \ge \gamma \delta\ttt_{\x}(\y), \]
+with $\ttt$ being a ground truth labeling, $\delta\ttt_{\x}(\y)$ being the number
 of incorrect labelings, and $\gamma$ being the margin by which this constraint
 is satisfied.
 
@@ -293,11 +293,13 @@ We first constructed and tested the method used by \cite{poliner2006discriminati
 \caption{Charts the ability of the classifier for M60. Red = predicted true, actual true. Blue = predictive positive, actual negative. Green = predicted negative, actual positive. Yellow = predicted negative, actual negative.} 
 \end{figure}
 
-We next attempted to compare the One-vs-All SVM with a Max-Margin Markov Network approach by measuring the accuracy of these techniques in classifying a single note, middle C (M60). For this experiment, we considered the files in MAPS_AkPnCGdD_2; these files consisted of various classical music pieces including Chopin's Op 10 Et 12 and Mendel's Op 53. These files were split into training and testing data. 
+We next attempted to compare the One-vs-All SVM with a Max-Margin Markov Network approach by measuring the accuracy of these techniques in classifying a single note, middle C (M60). For this experiment, we considered the files in MAPS_AkPnCGdD_2; these files consisted of various classical music pieces including Chopin's Op 10 Et 12 and Mendel's Op 53. These files were split into training and testing data randomly but each classifier was trained and tested on the same files. Each file was split into windows as mentioned above and the first 2000 were selected. For the disciminitive SVM, we also attempted to keep the number of positive and negative examples balanced.
 
 
-\section{Further Work}
-
+\section{Conclusion and Future Work}
+We note that the structured maximum-margin CRF classification works with
+better accuracy than the one-vs-all SVM classification, but there is still
+plenty of room for improvement.
 
 A noticeable feature of our results was that our classifier tended to miss the
 initial and final parts of notes that were played, especially the tails of
@@ -306,11 +308,12 @@ We speculate that this might be circumvented by having more than binary labels
 for whether each note is on or off: additionally, notes could be in various
 stages of onset or of offset, and also at different amplitudes.
 
-We also speculate that individual 
-
-\section{Conclusion}
-
-BLAH BLAH BLAH
+We also speculate that further improvements could be made by training all 88
+notes in parallel: that is instead of creating 88 individual CRFs with their
+own feature vectors, there would still be 88 CRFs, but they would all share
+the same parameters vector $\w$. This could be trained by concatenating the
+feature vectors of all 88 note pitches, as $\f(\x,\y) =
+\bigoplus_{\omega}\f_{\omega}{\x,\y}$. 
 
 % In the unusual situation where you want a paper to appear in the
 % references without citing it in the main text, use \nocite
