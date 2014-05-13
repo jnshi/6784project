@@ -23,8 +23,8 @@ posY = []
 negX = []
 negY = []
 
-positive_samples_per_file = 100
-negative_samples_per_file = 3
+positive_samples_per_file = 1000000
+negative_samples_per_file = 3000000
 
 framesamp = 1024
 hopsamp = 80
@@ -135,42 +135,38 @@ def svm_test(clf, note, files):
 
 #@profile
 def test():
-    train_dir = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL'
-    test_dir = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/RAND'
-
+#    train_dir = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL'
+#    test_dir = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/RAND'
+    train_file = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_2/AkPnCGdD/MUS/MAPS_MUS-chpn_op10_e12_AkPnCGdD.mid'
+    test_file = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_2/AkPnCGdD/MUS/MAPS_MUS-grieg_kobold_AkPnCGdD.mid'
     note = 60
 
     positive = 0
     negative = 0
     train_files = []
-    train_files.extend(dirs.get_files_with_extension(train_dir, '.mid'))
-    print 'num files '+str(len(train_files))
+    train_files.extend([train_file])
 
     map(per_file(note), train_files)
-  
-    for n in range(100, 1001, 100): 
-        print 'posX ' + str(len(posX))
-        print 'negX ' + str(len(negX))
 
-        posind = random.sample(range(len(posX)), n)
-        negind = random.sample(range(len(negX)), n)
+    print len(posX)
+    print len(negX)  
 
-        X = []
-        X.extend([posX[i] for i in posind])
-        X.extend([negX[i] for i in negind])
+    X = []
+    X.extend(posX)
+    X.extend(negX)
 
-        Y = []
-        Y.extend([posY[i] for i in posind])
-        Y.extend([negY[i] for i in negind])
+    Y = []
+    Y.extend(posY)
+    Y.extend(negY)
 
-        clf = svm.SVC(kernel='linear')
-        clf.fit(np.array(X), np.array(Y))
+    clf = svm.SVC(kernel='linear')
+    clf.fit(np.array(X), np.array(Y))
 
-        test_files = []
-        test_files.extend(dirs.get_files_with_extension(test_dir, '.mid'))
+    test_files = []
+    test_files.extend([test_file])
 
-        results = svm_test(clf, i, test_files)
-        print str(n) + ': ' + str(' '.join(results))
+    results = svm_test(clf, note, test_files)
+    print str(n) + ': ' + ' '.join([str(r) for r in results])
 
 test()
 # cProfile.run('re.compile(test())')

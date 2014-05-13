@@ -252,15 +252,9 @@ for some vector $\w$ that we train using SVM methods, and some vector of
 features $\f_t(\x,\y)$.
 
 \subsection{Features}
-We follow \cite{} 
-
-
+We use the features suggested in \cite{poliner2006discriminative}.
 We use as our features essentially raw spectral data:
-A STFT of the audio data sampled at % TODO how many samples per second
-using the % TODO which type of window
-and with window size % TODO which window size.
-
-We space the different windows % TODO how far apart
+A STFT of the audio data sampled at $N$ = 1024 (128 milliseconds), an $N$-point Hanning window, and an 80 point advance between adjacent windows (for a 10-millisecond hop between successive frames).
 
 Since we are training a model that leverages correlations in note labels
 between adjacent time points, we also include the features from adjacent
@@ -292,8 +286,7 @@ We separate our data into training, validation, and test sets so that.
 % TODO
 We evaluate according to the standard set in \cite{poliner2006discriminative} and \cite{bock2012polyphonic}.
 In both of these papers, they worked with a large library of mp3 files accompanied by midi files. Their software produced
-output which could be directly compared with the midi files and measured for: notes correctly predicted, notes failed to be predicted,
-and notes incorrectly predicted.
+output which could be directly compared with the midi files and measured for: notes correctly predicted, notes failed to be predicted, and notes incorrectly predicted.
 
 
 \section{Conclusion}
