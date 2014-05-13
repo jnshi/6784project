@@ -31,9 +31,9 @@ def get_txt_as_label(filename, samplerate, framesamp, hopsamp, nwindows, downsam
     f.closed
     return data
 
-def get_txt_as_label_for_note(filename, note, samplerate, framesamp, hopsamp, nwindows, downsample=False):
+def get_txt_as_scikit_label(filename, samplerate, framesamp, hopsamp, nwindows, downsample=False):
     assert dirs.get_ext(filename) == '.txt'
-    data = np.array([0 for i in range(nwindows)])
+    data = [[] for j in range(nwindows)]
     with open(filename, 'r') as f:
         content = f.readlines()
         for i in range(1, len(content)):
@@ -43,7 +43,23 @@ def get_txt_as_label_for_note(filename, note, samplerate, framesamp, hopsamp, nw
             swindow, _ = ut.frame_to_window(sframe, framesamp, hopsamp, nwindows)
             _, ewindow = ut.frame_to_window(eframe, framesamp, hopsamp, nwindows)
             for w in range(swindow, ewindow):
-                data[w] = int(int(midipitch) == note)
+                data[w].append(int(midipitch)-21)
+    f.closed
+    return data
+
+def get_txt_as_label_for_note(filename, note, samplerate, framesamp, hopsamp, nwindows, downsample=False):
+    assert dirs.get_ext(filename) == '.txt'
+    data = [0 for i in range(nwindows)]
+    with open(filename, 'r') as f:
+        content = f.readlines()
+        for i in range(1, len(content)):
+            onset, offset, midipitch = content[i].split()
+            sframe = int(float(onset) * samplerate)
+            eframe = int(float(offset) * samplerate)
+            swindow, _ = ut.frame_to_window(sframe, framesamp, hopsamp, nwindows)
+            _, ewindow = ut.frame_to_window(eframe, framesamp, hopsamp, nwindows)
+            for w in range(swindow, ewindow):
+                data[w] |= int(int(midipitch) == note)
     f.closed
     return data 
 

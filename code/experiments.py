@@ -1,5 +1,8 @@
 import audioprocessor
 import matplotlib.pyplot as plt
+import util
+import scipy
+import pylab
 
 def print_waveform(filename):
     f = audioprocessor.get_wav_file(filename)
@@ -49,3 +52,8 @@ def print_mapfreq(filename, title):
     pylab.ylabel('Frequency')
     pylab.title(title)
     pylab.show()
+
+'''
+filename = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO/MAPS_ISOL_NO_F_S0_M28_AkPnCGdD.wav'
+print_mapfreq(filename, 'M23 (AkPnCGdD)')
+'''
