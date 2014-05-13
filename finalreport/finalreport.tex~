@@ -33,11 +33,11 @@
 % Employ the following version of the ``usepackage'' statement for
 % submitting the draft version of the paper for review.  This will set
 % the note in the first column to ``Under review.  Do not distribute.''
-% \usepackage{icml2010} 
+\usepackage{icml2010} 
 % Employ this version of the ``usepackage'' statement after the paper has
 % been accepted, when creating the final version.  This will set the
 % note in the first column to ``Appearing in''
-\usepackage[accepted]{icml2010}
+%\usepackage[accepted]{icml2010}
 
 
 % The \icmltitle you define below is probably too long as a header.
@@ -71,12 +71,12 @@
 ]
 
 \begin{abstract} 
-We investigate the use of maximum-margin Markov classifiers in the automated
-transcription of polyphonic piano music.
+We investigate the use of maximum-margin conditional random field (CRF)
+classifiers in the automated transcription of polyphonic piano music.
 Existing work on this problem has involved separate and independent smoothing
-and classification steps. The use of a maximum-margin Markov classifier allows
-us to unify these two steps.
-% TODO
+and classification steps. The use of a maximum-margin CRF classifier allows
+us to unify these two steps. We present evaluation results against a
+frame-by-frame one-vs-all SVM classifier.
 \end{abstract} 
 
 
@@ -141,7 +141,6 @@ Features that we observe within a spectogram include:
 
 
 
-\pagebreak % TODO temporary fix for citation-pagebreak hyperref bug.
 Previous work on this task have focused mostly around:
 \begin{enumerate}
 \item Discriminative SVMs and CRFs trained to detect individual notes
@@ -187,11 +186,12 @@ notes directly from the spectograms as features.
 \newcommand{\y}{\mathbf{y}}
 \newcommand{\w}{\mathbf{w}}
 \newcommand{\f}{\mathbf{f}}
+\newcommand{\t}{\mathbf{t}}
 
 % TODO
 The core method being introduced is to leverage a
-maximum-margin Markov model \cite{Taskar03max-marginmarkov} for classification
-on spectral data, which improves
+maximum-margin CRF \cite{Taskar03max-marginmarkov} for
+structural classification on spectral data, which improves
 upon an HMM by using SVM techniques to find optimal separating hyperplanes
 that respect correlations between components of output labels.
 
@@ -217,33 +217,42 @@ Similarly, $A \oplus B$ will denote the direct sum, so that:
 \]
 Informally, this is simply concatenating the two vectors $A$ and $B$.
 
-\subsection{Maximum-margin Markov network}
-% TODO(FIX THE SECTION)
-We set up a Markov network such that correlations exist only between:
-\begin{enumerate}
-\item different pitches within the same time window, and
-\item pitches that occur in adjacent time windows.
-\end{enumerate}
-% TODO diagram of Markov network?
+\subsection{Graphical model}
+We set up a CRF such that correlations exist only between adjacent time
+frames for identical note pitches.
 
-% TODO wait... this isn't even a Markov chain...
+In the framework of structural CRFs, we minimize
+an energy function $\psi_{\omega,t}(\x,y_t,y_{t+1})$,
+with $x_{\omega,t}$ being the STFT component corresponding to the intensity
+of pitch frequency $\omega$ at time $t$. 
 
-In the framework of Markov networks, we minimize
-an energy function $\psi(\x,\y)$, which we will decompose as
-$\psi(\x,\y) = \sum_t \psi_t(\x,\y)$, with one energy function per time window
-in the signal. A maximum-margin Markov network then sets:
-\[ \psi_t(\x,\y) = \exp[\w^T\f_t(\x,\y)], \]
-for some vector $\w$ that we train using SVM methods, and some vector of
-features $\f_t(\x,\y)$.
+In order to learn these energy functions, we decompose them as follows:
+\[ \psi_{\omega,t}(\x,y_t,y_{t+1}) = \exp[\w^T\f_{\omega}(\x,y_t,y_{t+1})], \]
+for some vector $\w$ that we train using SVM methods, and some vector
+function $\f$ representing a feature basis.
 
-\subsection{Features}
+Since transitions between notes being on and off should not be qualitatively
+different at different time points in the signal, we can write
+$\f_{\omega}(\x,\y) = \sum_t \f_{\omega}(\x,y_t,y_{t+1})$,
+at which point maximum-margin methods can find the vector $\w$ which minimizes
+the margin by which each training sample constraint is satisfied,
+this being:
+\[ \w^T(\f_{\omega}(\x,\t) - \f_{\omega}(\x,\y)) \ge \gamma \delta\t_{\x}(\y), \]
+with $\t$ being a ground truth labeling, $\delta\t_{\x}(\y)$ being the number
+of incorrect labelings, and $\gamma$ being the margin by which this constraint
+is satisfied.
+
+\subsection{Features}\label{features}
 We use the features suggested in \cite{poliner2006discriminative}.
 We use as our features essentially raw spectral data:
-A STFT of the audio data sampled at $N$ = 1024 (128 milliseconds), an $N$-point Hanning window, and an 80 point advance between adjacent windows (for a 10-millisecond hop between successive frames).
+A STFT of the audio data sampled at 5.5 kHz,
+an 1024-point Hanning window (185 milliseconds),
+and an 80-point advance between adjacent windows
+(for a 14.5-millisecond hop between successive frames).
 
 Since we are training a model that leverages correlations in note labels
 between adjacent time points, we also include the features from adjacent
-time points. This way the Markov network can leverage \emph{changes} in
+time points. This way the graphical model can leverage \emph{changes} in
 intensity at each frequency in order to help predict changes in note labels.
 
 Thus, if we let $\x_{\omega}(t)$ denote the signal intensity at frequency
@@ -251,18 +260,25 @@ $\omega$ and time $t$, and similarly let $\y_{\rho}(t)$ denote an indicator
 variable for whether pitch $\rho$ is on at time $t$, our expression for the
 feature vector is:
 \begin{align*}
-  \f_t(\x,\y) &= h_t(\y) \oplus
+  \f'_{\omega}(\x,\y) &= 
       \\& [\x(t+1) \oplus \x(t) \oplus \x(t-1)]
       \\&\otimes [\y(t+1) \oplus \y(t) \oplus \y(t-1)],
 \end{align*}
-where $h_t$ encodes the Markov transition probabilities for each particular
-time step of the note labeling.
 
 \section{Data}
 Training and testing data were sourced from the MAPS dataset 
 \cite{emiya2010multipitch}, a set of 31 GB of piano recordings in .wav format,
 recorded on varying pianos and in varying acoustic environments, with ground
-truth transcription labels provided. We separated our data into training and test sets.
+truth transcription labels provided. In particular we used a set of recordings
+of classical pieces, played on a grand piano in a concert hall.
+
+We downsampled the original 44.1kHz recordings by a factor of 8 to
+obtain 5.5kHz signals. After extracting the windows as described in section
+\ref{features}, we then used the first 2000 windows (or 30 seconds) of each
+recording.
+
+We separate our data into training and test sets, such that 5 times as
+many audio files were used for testing as for training.% TODO
 
 \section{Evaluation}
 % TODO
@@ -270,14 +286,27 @@ We evaluate according to the standard set in \cite{poliner2006discriminative} an
 In both of these papers, they worked with a large library of wav files accompanied by midi files. Their software produced
 output which could be directly compared with the midi files and measured for: notes correctly predicted, notes failed to be predicted, and notes incorrectly predicted.
 
-We first constructed and tested the method used by \cite{poliner2006discriminative} in identifying individual notes. In an attempt to replicate Figure 2, we tested the classification accuracy of an SVM trained to recognize middle C (M60). For this, we used the ISOL directory (individual notes, chromatics, trills, repeated notes, stacatto) as the training data and the RAND directory (random chords) as the test data. Despite following the method and features described in \cite{poliner2006discriminative} we found that the baseline accuracy of the SVM did not change as the number of samples increased significantly.
+We first constructed and tested the method used by \cite{poliner2006discriminative} in identifying individual notes. In an attempt to replicate Figure 2, we tested the classification accuracy of the One-vs-All SVM style by training a single SVM to recognize middle C (M60). For this, we used the ISOL directory as the training data (individual notes, chromatics, trills, repeated notes, stacatto) and the RAND directory as the test data (random chords). Despite following the method and features described in \cite{poliner2006discriminative} we found that the baseline accuracy of the SVM did not change as the number of samples increased significantly.
 
 \begin{figure}
 \includegraphics[scale=.15]{discriminitive.png}
-\caption{Charts the ability of the classifier. Red = predicted true, actual true. Blue = predictive positive, actual negative. Green = predicted negative, actual positive. Yellow = predicted negative, actual negative.} 
+\caption{Charts the ability of the classifier for M60. Red = predicted true, actual true. Blue = predictive positive, actual negative. Green = predicted negative, actual positive. Yellow = predicted negative, actual negative.} 
 \end{figure}
 
+We next attempted to compare the One-vs-All SVM with a Max-Margin Markov Network approach by measuring the accuracy of these techniques in classifying a single note, middle C (M60). For this experiment, we considered the files in MAPS_AkPnCGdD_2; these files consisted of various classical music pieces including Chopin's Op 10 Et 12 and Mendel's Op 53. These files were split into training and testing data. 
 
+
+\section{Further Work}
+
+
+A noticeable feature of our results was that our classifier tended to miss the
+initial and final parts of notes that were played, especially the tails of
+notes that were held for particularly long periods of time.
+We speculate that this might be circumvented by having more than binary labels
+for whether each note is on or off: additionally, notes could be in various
+stages of onset or of offset, and also at different amplitudes.
+
+We also speculate that individual 
 
 \section{Conclusion}
 
@@ -286,6 +315,8 @@ BLAH BLAH BLAH
 % In the unusual situation where you want a paper to appear in the
 % references without citing it in the main text, use \nocite
 %\nocite{langley00}
+
+
 
 
 \section{Introductory Figures}

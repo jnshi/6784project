@@ -286,12 +286,14 @@ We evaluate according to the standard set in \cite{poliner2006discriminative} an
 In both of these papers, they worked with a large library of wav files accompanied by midi files. Their software produced
 output which could be directly compared with the midi files and measured for: notes correctly predicted, notes failed to be predicted, and notes incorrectly predicted.
 
-We first constructed and tested the method used by \cite{poliner2006discriminative} in identifying individual notes. In an attempt to replicate Figure 2, we tested the classification accuracy of an SVM trained to recognize middle C (M60). For this, we used the ISOL directory (individual notes, chromatics, trills, repeated notes, stacatto) as the training data and the RAND directory (random chords) as the test data. Despite following the method and features described in \cite{poliner2006discriminative} we found that the baseline accuracy of the SVM did not change as the number of samples increased significantly.
+We first constructed and tested the method used by \cite{poliner2006discriminative} in identifying individual notes. In an attempt to replicate Figure 2, we tested the classification accuracy of the One-vs-All SVM style by training a single SVM to recognize middle C (M60). For this, we used the ISOL directory as the training data (individual notes, chromatics, trills, repeated notes, stacatto) and the RAND directory as the test data (random chords). Despite following the method and features described in \cite{poliner2006discriminative} we found that the baseline accuracy of the SVM did not change as the number of samples increased significantly.
 
 \begin{figure}
 \includegraphics[scale=.15]{discriminitive.png}
-\caption{Charts the ability of the classifier. Red = predicted true, actual true. Blue = predictive positive, actual negative. Green = predicted negative, actual positive. Yellow = predicted negative, actual negative.} 
+\caption{Charts the ability of the classifier for M60. Red = predicted true, actual true. Blue = predictive positive, actual negative. Green = predicted negative, actual positive. Yellow = predicted negative, actual negative.} 
 \end{figure}
+
+We next attempted to compare the One-vs-All SVM with a Max-Margin Markov Network approach by measuring the accuracy of these techniques in classifying a single note, middle C (M60). For this experiment, we considered the files in MAPS_AkPnCGdD_2; these files consisted of various classical music pieces including Chopin's Op 10 Et 12 and Mendel's Op 53. These files were split into training and testing data. 
 
 
 \section{Further Work}
