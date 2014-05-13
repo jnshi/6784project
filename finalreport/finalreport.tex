@@ -234,6 +234,7 @@ Similarly, $A \oplus B$ will denote the direct sum, so that:
 Informally, this is simply concatenating the two vectors $A$ and $B$.
 
 \subsection{Maximum-margin Markov network}
+% TODO(FIX THE SECTION)
 We set up a Markov network such that correlations exist only between:
 \begin{enumerate}
 \item different pitches within the same time window, and
@@ -279,14 +280,15 @@ Training and testing data were sourced from the MAPS dataset
 recorded on varying pianos and in varying acoustic environments, with ground
 truth transcription labels provided.
 
-We separate our data into training, validation, and test sets so that.
+We separate our data into training and test sets; validation was not need in the experiments performed.
 % TODO
 
 \section{Evaluation}
 % TODO
 We evaluate according to the standard set in \cite{poliner2006discriminative} and \cite{bock2012polyphonic}.
-In both of these papers, they worked with a large library of mp3 files accompanied by midi files. Their software produced
+In both of these papers, they worked with a large library of wav files accompanied by midi files. Their software produced
 output which could be directly compared with the midi files and measured for: notes correctly predicted, notes failed to be predicted, and notes incorrectly predicted.
+
 
 
 \section{Conclusion}

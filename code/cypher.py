@@ -23,8 +23,10 @@ posY = []
 negX = []
 negY = []
 
-positive_samples_per_file = 1000000
-negative_samples_per_file = 3000000
+positive_samples_per_file = 2000
+negative_samples_per_file = 2000
+
+windows_per_file = 2000
 
 framesamp = 1024
 hopsamp = 80
@@ -39,10 +41,9 @@ def get_data(f, note, sub = True):
     x = features.get_wav_data_as_feature(wav_data, framesamp, hopsamp, True)
     y = features.get_txt_as_label_for_note(txt_filename, note, samplerate/8, framesamp, hopsamp, len(x), True)
 
-
     start, end = ut.get_trim_indices(x)
-    x = x[start:end]
-    y = y[start:end]
+    x = x[start:start+windows_per_file]
+    y = y[start:start+windows_per_file]
 
     posx = []
     posy = []
@@ -166,7 +167,7 @@ def test():
     test_files.extend([test_file])
 
     results = svm_test(clf, note, test_files)
-    print str(n) + ': ' + ' '.join([str(r) for r in results])
+    print ' '.join([str(r) for r in results])
 
 test()
 # cProfile.run('re.compile(test())')
