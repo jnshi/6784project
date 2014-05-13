@@ -151,9 +151,9 @@ def test():
         posY = []
         negY = []
 
-        nfiles = int(nindex*(nindex+1)/2)
+        nfiles = nindex
         ntrain = nfiles
-        ntest = 3*nfiles
+        ntest = 5*nfiles
 
         train_files = files[:nfiles]
 #        print 'train_files: ' + str(train_files)

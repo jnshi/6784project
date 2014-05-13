@@ -112,11 +112,52 @@ def print_comparision_one():
     plt.xticks(index + 2*bar_width, ('dis 1/3', 'dis 3/9', 'struct 1/3', 'struct 3/9'))
     plt.xlabel('Group')
     plt.ylabel('Percentage')
+    plt.title('One-vs-All SVM compared with Max-Margin Markov')
     plt.legend()
     plt.show()
+
+def print_comparision_two():
+    bar_width = .2
+    index = np.arange(6)
+    ptat = [233, 254, 142,333, 1488, 1650]
+    pfaf = [1581, 2561, 3237,8785,15693,22549]
+    ptaf = [1035, 1832, 3130, 365, 1420,2501]
+    pfat = [142, 233, 158, 517, 1399,3300]
+    total = [float(ptat[i]+ptaf[i]+pfat[i]+pfaf[i]) for i in range(len(ptat))]
+
+    perptat = [ptat[i]/total[i] for i in range(len(ptat))]
+    perptaf = [ptaf[i]/total[i] for i in  range(len(ptaf))]
+    perpfat = [pfat[i]/total[i] for i in range(len(ptaf))]
+    perpfaf = [pfaf[i]/total[i] for i in range(len(pfaf))]
+    opacity = .4 
+
+    rects1 = plt.bar(index, perptat, bar_width,
+        color = 'r',
+        alpha = opacity,
+        label = 'Predict True, Actual True')
+    rects2 = plt.bar(index + bar_width, perptaf, bar_width,
+        color='b',
+        alpha = opacity,
+        label = 'Predict True, Actual False')
+    rects3 = plt.bar(index + 2*bar_width, perpfat, bar_width,
+        color='g',
+        alpha = opacity,
+        label = 'Predict False, Actual True')
+    rects4 = plt.bar(index + 3*bar_width, perpfaf, bar_width,
+        color='y',
+        alpha = opacity,
+        label= 'Predict False, Actual False')
+
+    plt.xticks(index + 2*bar_width, ('dis 1/5', 'dis 2/10', 'dis 3/15', 'struct 1/5', 'struct 2/10', 'struct 3/15'))
+    plt.xlabel('Group')
+    plt.ylabel('Percentage')
+    plt.title('One-vs-All SVM compared with Max-Margin Markov')
+    plt.legend()
+    plt.show()
+
 '''
 filename = '/home/charles/maps-data/maps/MAPS_AkPnCGdD_1/AkPnCGdD/ISOL/NO/MAPS_ISOL_NO_F_S0_M28_AkPnCGdD.wav'
 print_mapfreq(filename, 'M23 (AkPnCGdD)')
 '''
 
-print_comparision_one()
+print_comparision_two()
